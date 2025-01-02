@@ -3,6 +3,7 @@ class WebScraperService
     /xn--80ac9aeh6f\.xn--p1ai/ => '.overflow-hidden.text-base.leading-5',
     /tl\.rulate\.ru/ => 'div.content-text'
   }.freeze
+  CACHE_EXPIRATION = 1.day
 
   def initialize(url)
     @url = url
@@ -10,6 +11,14 @@ class WebScraperService
   end
 
   def fetch_and_parse
+    Rails.cache.fetch(cache_key, expires_in: CACHE_EXPIRATION) do
+      fetch_and_parse_content
+    end
+  end
+
+  private
+
+  def fetch_and_parse_content
     html = URI.open(@url)
     raw_content = html.read
 
@@ -24,7 +33,9 @@ class WebScraperService
     raise "Parsing error: #{e.message}"
   end
 
-  private
+  def cache_key
+    "web_scraper:#{Digest::MD5.hexdigest(@url)}"
+  end
 
   def select_selector(url)
     PARSER_MAPPING.find { |domain, _| url.match?(domain) }&.last
