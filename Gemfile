@@ -57,6 +57,9 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop-rails-omakase', require: false
+  gem 'dotenv-rails'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development do
@@ -87,3 +90,8 @@ end
 
 gem 'rubocop', require: false
 gem 'ruby-openai'
+
+gem 'nokogiri'
+gem 'open-uri'
+gem 'charlock_holmes'
+gem 'htmlentities'

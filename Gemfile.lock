@@ -95,9 +95,13 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    charlock_holmes (0.7.9)
     coderay (1.1.3)
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     crass (1.0.6)
     cssbundling-rails (1.4.1)
       railties (>= 6.0.0)
@@ -115,6 +119,9 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.1)
     dotenv (3.1.7)
+    dotenv-rails (3.1.7)
+      dotenv (= 3.1.7)
+      railties (>= 6.1)
     drb (2.2.1)
     ed25519 (1.3.0)
     erubi (1.13.1)
@@ -143,6 +150,8 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashdiff (1.1.2)
+    htmlentities (4.3.4)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
     importmap-rails (2.1.0)
@@ -212,6 +221,10 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.1-x86_64-linux-gnu)
       racc (~> 1.4)
+    open-uri (0.4.1)
+      stringio
+      time
+      uri
     ostruct (0.6.1)
     parallel (1.26.3)
     parser (3.3.6.0)
@@ -423,6 +436,8 @@ GEM
     thor (1.3.2)
     thruster (0.1.9-x86_64-darwin)
     thruster (0.1.9-x86_64-linux)
+    time (0.3.0)
+      date
     timeout (0.4.3)
     turbo-rails (2.0.11)
       actionpack (>= 6.0.0)
@@ -434,6 +449,12 @@ GEM
     unicode-emoji (4.0.4)
     uri (1.0.2)
     useragent (0.16.11)
+    vcr (6.3.1)
+      base64
+    webmock (3.24.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
@@ -451,16 +472,21 @@ DEPENDENCIES
   bootsnap
   brakeman
   capybara
+  charlock_holmes
   cssbundling-rails
   database_cleaner-active_record
   database_cleaner-redis
   debug
+  dotenv-rails
   factory_bot_rails
   faker
+  htmlentities
   importmap-rails
   jbuilder
   jsbundling-rails
   kamal
+  nokogiri
+  open-uri
   pg (~> 1.1)
   propshaft
   pry
@@ -493,6 +519,8 @@ DEPENDENCIES
   thruster
   turbo-rails
   tzinfo-data
+  vcr
+  webmock
 
 RUBY VERSION
    ruby 3.3.6p108
