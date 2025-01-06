@@ -78,6 +78,9 @@ group :development do
   gem 'ruby-lsp-rails'
   gem 'ruby-lsp-rspec'
   gem 'standard'
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "ruby-debug-ide"
+  gem "debase"
 end
 
 group :test do

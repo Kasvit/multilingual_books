@@ -1,0 +1,38 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Chapter <%= @chapter.position %></h1>
+        <%= link_to book_path(@book), class: "text-gray-500 hover:text-gray-700" do %>
+          Back to <%= @book.book_translations.first&.title || "Book" %>
+        <% end %>
+      </div>
+
+      <%# Chapter Navigation %>
+      <div class="flex justify-between items-center mb-6">
+        <% if prev_chapter = @book.chapters.where("position < ?", @chapter.position).order(position: :desc).first %>
+          <%= link_to book_chapter_path(@book, prev_chapter), class: "btn-secondary" do %>
+            ← Previous Chapter
+          <% end %>
+        <% end %>
+
+        <% if next_chapter = @book.chapters.where("position > ?", @chapter.position).order(:position).first %>
+          <%= link_to book_chapter_path(@book, next_chapter), class: "btn-secondary" do %>
+            Next Chapter →
+          <% end %>
+        <% end %>
+      </div>
+
+      <%= render "translations", chapter: @chapter %>
+
+      <div class="flex space-x-2">
+        <%= link_to "Edit", edit_book_chapter_path(@book, @chapter),
+            class: "btn-secondary",
+            data: { turbo_frame: "modal" } %>
+        <%= link_to "Back to Book", book_path(@book), class: "btn-secondary" %>
+      </div>
+    </div>
+  </div>
+
+  <%= turbo_frame_tag "modal" %>
+</div>

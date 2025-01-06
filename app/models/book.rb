@@ -15,9 +15,21 @@ class Book < ApplicationRecord
   has_many :book_translations, dependent: :destroy
   has_many :chapters, dependent: :destroy
 
+  before_validation :clean_selected_languages
   before_create :set_selected_languages
   after_create :generate_translations
   after_create :generate_chapters
+
+  private
+
+  def clean_selected_languages
+    # Remove blank strings and ensure unique values
+    self.selected_languages = selected_languages.reject(&:blank?).uniq if selected_languages.present?
+  end
+
+  def set_selected_languages
+    self.selected_languages = AVAILABLE_LANGUAGES if selected_languages.blank?
+  end
 
   def generate_translations
     selected_languages.each do |language|
@@ -29,10 +41,6 @@ class Book < ApplicationRecord
 
   def generate_chapters
     chapters.create!(position: 1)
-  end
-
-  def set_selected_languages
-    self.selected_languages = AVAILABLE_LANGUAGES if selected_languages.blank?
   end
 
   # [{"book_id"=>5,

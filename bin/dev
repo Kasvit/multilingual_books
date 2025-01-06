@@ -1,4 +1,13 @@
-#!/usr/bin/env ruby
-# frozen_string_literal: true
+#!/usr/bin/env bash
 
-exec './bin/rails', 'server', *ARGV
+# Default to port 3000 if not specified
+export PORT="${PORT:-3000}"
+
+# Check for foreman
+if ! command -v foreman &> /dev/null; then
+  echo "Installing foreman..."
+  gem install foreman
+fi
+
+# Execute foreman with Procfile.dev
+exec foreman start -f Procfile.dev "$@"

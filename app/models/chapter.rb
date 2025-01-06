@@ -29,6 +29,12 @@ class Chapter < ApplicationRecord
 
   delegate :selected_languages, to: :book
 
+  def to_param
+    position.to_s
+  end
+
+  private
+
   def generate_translations
     selected_languages.each do |language|
       translation = chapter_translations.find_or_create_by(language: language)
