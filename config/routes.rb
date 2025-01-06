@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  get 'up' => 'rails/health#show', as: :rails_health_check
-  root "books#index"
+  root 'books#index'
 
-  resources :books do
-    resources :book_translations, path: 'translations'
-    resources :chapters, param: :position do
-      resources :chapter_translations, path: 'translations'
+  namespace :admin do
+    resources :books do
+      resources :book_translations, param: :id
+      resources :chapters, param: :position do
+        resources :chapter_translations, param: :id
+      end
     end
+  end
+
+  resources :books, only: %i[index show] do
+    resources :chapters, only: [:show], param: :position
   end
 end

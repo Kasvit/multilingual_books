@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'faker'
 
 def generate_chapter_content
@@ -8,30 +9,30 @@ def generate_chapter_content
   paragraphs.join("\n\n")
 end
 
-puts "Cleaning database..."
+puts 'Cleaning database...'
 ChapterTranslation.destroy_all
 Chapter.destroy_all
 BookTranslation.destroy_all
 Book.destroy_all
 
-puts "Creating books..."
+puts 'Creating books...'
 books_data = [
   {
-    isbn: "978-0-7475-3269-9",
+    isbn: '978-0-7475-3269-9',
     chapters_count: 5,
     translations: {
-      uk: { title: "Шлях Дракона", description: "Український опис книги" },
-      en: { title: "The Dragon's Path", description: "English book description" },
-      ru: { title: "Путь Дракона", description: "Описание книги на русском" }
+      uk: { title: 'Шлях Дракона', description: 'Український опис книги' },
+      en: { title: "The Dragon's Path", description: 'English book description' },
+      ru: { title: 'Путь Дракона', description: 'Описание книги на русском' }
     }
   },
   {
-    isbn: "978-0-7475-3270-5",
+    isbn: '978-0-7475-3270-5',
     chapters_count: 3,
     translations: {
-      uk: { title: "Містичні казки", description: "Український опис книги" },
-      en: { title: "Mystic Tales", description: "English book description" },
-      ru: { title: "Мистические сказки", description: "Описание книги на русском" }
+      uk: { title: 'Містичні казки', description: 'Український опис книги' },
+      en: { title: 'Mystic Tales', description: 'English book description' },
+      ru: { title: 'Мистические сказки', description: 'Описание книги на русском' }
     }
   }
 ]
@@ -67,7 +68,7 @@ books_data.each do |book_data|
 end
 
 puts "\nSeeding completed!"
-puts "Created:"
+puts 'Created:'
 puts "- #{Book.count} books"
 puts "- #{BookTranslation.count} book translations"
 puts "- #{Chapter.count} chapters"

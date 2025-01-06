@@ -1,41 +1,53 @@
 <div class="container mx-auto px-4 py-8">
-  <div class="bg-white rounded-lg shadow p-6">
-    <div class="mb-6">
-      <h1 class="text-2xl font-bold mb-4">Book Details</h1>
-
-      <%= render "translations", book: @book %>
-
-      <div class="mb-4">
-        <strong>ISBN:</strong>
-        <%= @book.isbn %>
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8" data-controller="tabs">
+      <div class="border-b border-gray-200 mb-6">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+          <% @book.book_translations.each_with_index do |translation, index| %>
+            <button type="button"
+                    data-tabs-target="tab"
+                    data-action="click->tabs#showTranslation"
+                    data-language="<%= translation.language %>"
+                    class="tab-button">
+              <%= translation.language.upcase %>
+            </button>
+          <% end %>
+        </nav>
       </div>
 
-      <div class="mb-4">
-        <strong>Selected Languages:</strong>
-        <%= @book.selected_languages.join(", ") %>
-      </div>
-
-      <div class="mt-8">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold">Chapters</h2>
-          <%= link_to "New Chapter", new_book_chapter_path(@book),
-              class: "btn-primary",
-              data: { turbo_frame: "modal" } %>
-        </div>
-
-        <%= turbo_frame_tag "chapters" do %>
-          <div class="space-y-4">
-            <%= render @book.chapters.includes(:chapter_translations).order(:position) %>
+      <div>
+        <% @book.book_translations.each_with_index do |translation, index| %>
+          <div data-tabs-target="content"
+               data-language="<%= translation.language %>"
+               class="translation-content hidden">
+            <h1 class="text-3xl font-bold mb-2">
+              <%= translation.title %>
+              <span class="text-lg font-normal text-gray-600">(<%= translation.language.upcase %>)</span>
+            </h1>
+            <p class="text-gray-700"><%= translation.description %></p>
           </div>
+        <% end %>
+      </div>
+
+      <div class="text-sm text-gray-500 mt-6">
+        <div>ISBN: <%= @book.isbn %></div>
+        <div>Доступні мови: <%= @book.selected_languages.map(&:upcase).join(", ") %></div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <h2 class="text-xl font-bold mb-4">Зміст</h2>
+      <div class="space-y-2">
+        <% @book.chapters.each do |chapter| %>
+          <%= link_to "Розділ #{chapter.position}", book_chapter_path(@book, chapter.position), 
+              class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
         <% end %>
       </div>
     </div>
 
-    <div class="flex space-x-2">
-      <%= link_to "Edit", edit_book_path(@book), class: "btn-secondary", data: { turbo_frame: "modal" } %>
-      <%= link_to "Back", books_path, class: "btn-secondary" %>
+    <div class="mt-6">
+      <%= link_to "← Назад до списку книг", books_path, 
+          class: "text-blue-600 hover:text-blue-800 transition-colors" %>
     </div>
   </div>
-
-  <%= turbo_frame_tag "modal" %>
-</div>
+</div> 

@@ -1,4 +1,4 @@
-<%= form_with(model: [@book, chapter], class: "space-y-4") do |form| %>
+<%= form_with(model: [:admin, @book, chapter], class: "space-y-4") do |form| %>
   <% if chapter.errors.any? %>
     <div class="bg-red-50 p-4 rounded-lg">
       <h2 class="text-red-700 text-lg font-semibold">
@@ -20,6 +20,10 @@
 
   <div class="flex justify-end space-x-2">
     <%= form.submit class: "btn-primary" %>
-    <%= link_to "Cancel", book_path(@book), class: "btn-secondary" %>
+    <% if @chapter.persisted? %>
+      <%= link_to "Cancel", admin_book_chapter_path(@book, @chapter), class: "btn-secondary", data: { turbo: false } %>
+    <% else %>
+      <%= link_to "Cancel", admin_book_path(@book), class: "btn-secondary", data: { turbo: false } %>
+    <% end %>
   </div>
 <% end %>

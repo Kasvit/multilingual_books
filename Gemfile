@@ -12,8 +12,6 @@ gem 'propshaft'
 gem 'pg', '~> 1.1'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsbundling-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -67,6 +65,8 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   # gem "web-console"
   gem 'annotaterb'
+  gem 'debase'
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rails_live_reload'
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-lsp'
@@ -74,13 +74,11 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
+  gem 'ruby-debug-ide'
   gem 'ruby-lsp'
   gem 'ruby-lsp-rails'
   gem 'ruby-lsp-rspec'
   gem 'standard'
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-  gem "ruby-debug-ide"
-  gem "debase"
 end
 
 group :test do

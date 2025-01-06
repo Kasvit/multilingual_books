@@ -20,10 +20,11 @@ class Book < ApplicationRecord
   after_create :generate_translations
   after_create :generate_chapters
 
+  broadcasts_to ->(_book) { 'books' }, inserts_by: :prepend
+
   private
 
   def clean_selected_languages
-    # Remove blank strings and ensure unique values
     self.selected_languages = selected_languages.reject(&:blank?).uniq if selected_languages.present?
   end
 

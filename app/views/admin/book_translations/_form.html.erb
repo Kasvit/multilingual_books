@@ -1,4 +1,4 @@
-<%= form_with(model: [@book, @chapter, translation], class: "space-y-4") do |form| %>
+<%= form_with(model: [:admin, @book, translation], class: "space-y-4") do |form| %>
   <% if translation.errors.any? %>
     <div class="bg-red-50 p-4 rounded-lg">
       <h2 class="text-red-700 text-lg font-semibold">
@@ -17,7 +17,7 @@
       <%= form.label :language, class: "block text-sm font-medium text-gray-700" %>
       <%= form.select :language,
           options_for_select(
-            @chapter.book.selected_languages.map { |lang| [lang.upcase, lang] },
+            @book.selected_languages.map { |lang| [lang.upcase, lang] },
             translation.language
           ),
           { prompt: "Select language" },
@@ -31,12 +31,12 @@
   </div>
 
   <div>
-    <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_area :content, rows: 10, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+    <%= form.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= form.text_area :description, rows: 4, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
   </div>
 
   <div class="flex justify-end space-x-2">
     <%= form.submit class: "btn-primary" %>
-    <%= link_to "Cancel", book_chapter_path(@book, @chapter), class: "btn-secondary" %>
+    <%= link_to "Cancel", admin_book_path(@book), class: "btn-secondary" %>
   </div>
 <% end %>
