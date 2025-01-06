@@ -52,14 +52,15 @@ group :development, :test do
   gem 'brakeman', require: false
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'database_cleaner-active_record'
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rubocop-rails-omakase', require: false
-  gem 'dotenv-rails'
-  gem 'webmock'
+  gem 'shoulda-matchers'
   gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
@@ -84,14 +85,14 @@ group :test do
   gem 'database_cleaner-redis'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 6.0'
   gem 'simplecov', require: false
 end
 
 gem 'rubocop', require: false
 gem 'ruby-openai'
 
-gem 'nokogiri'
-gem 'open-uri'
+# for book parsing
 gem 'charlock_holmes'
 gem 'htmlentities'
+gem 'nokogiri'
+gem 'open-uri'
