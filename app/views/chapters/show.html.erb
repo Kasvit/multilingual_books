@@ -1,20 +1,14 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-4xl mx-auto">
-    <%# Навігація до книги %>
     <div class="mb-8">
       <%= link_to book_path(@book), class: "text-blue-600 hover:text-blue-800 transition-colors flex items-center" do %>
-        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-        </svg>
-        Назад до <%= @book.book_translations.first&.title || "книги" %>
+        ← Назад до <%= @book.book_translations.first&.title || "книги" %>
       <% end %>
     </div>
 
-    <%# Заголовок розділу %>
     <div class="bg-white rounded-lg shadow-lg p-6 mb-6" data-controller="tabs">
       <h1 class="text-2xl font-bold mb-4">Розділ <%= @chapter.position %></h1>
-      
-      <%# Вкладки з мовами %>
+
       <div class="border-b border-gray-200">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
           <% @chapter.chapter_translations.each_with_index do |translation, index| %>
@@ -29,7 +23,6 @@
         </nav>
       </div>
 
-      <%# Контент перекладів %>
       <div class="mt-6">
         <% @chapter.chapter_translations.each_with_index do |translation, index| %>
           <div data-tabs-target="content"
@@ -44,60 +37,18 @@
       </div>
     </div>
 
-    <%# Навігація між розділами %>
     <div class="flex justify-between items-center">
-      <% if @prev_chapter %>
-        <%= link_to book_chapter_path(@book, @prev_chapter), 
-            class: "inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 transition-colors" do %>
-          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-          Попередній розділ
+      <div>
+        <% if @has_prev_chapter %>
+          <%= link_to "Previous Chapter", book_chapter_path(@book, @chapter.position - 1) %>
         <% end %>
-      <% end %>
+      </div>
 
-      <% if @next_chapter %>
-        <%= link_to book_chapter_path(@book, @next_chapter),
-            class: "inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-md font-semibold text-gray-700 hover:bg-gray-50 transition-colors" do %>
-          Наступний розділ
-          <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
+      <div>
+        <% if @has_next_chapter %>
+          <%= link_to "Next Chapter", book_chapter_path(@book, @chapter.position + 1) %>
         <% end %>
-      <% end %>
+      </div>
     </div>
   </div>
 </div>
-
-<%# Стилі для вкладок %>
-<style>
-.tab-button {
-  @apply border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm;
-}
-.tab-button.active {
-  @apply border-blue-500 text-blue-600;
-}
-</style>
-
-<%# JavaScript для перемикання мов %>
-<script>
-function showTranslation(language) {
-  // Оновлюємо активну вкладку
-  document.querySelectorAll('.tab-button').forEach(button => {
-    if (button.dataset.language === language) {
-      button.classList.add('active');
-    } else {
-      button.classList.remove('active');
-    }
-  });
-
-  // Показуємо відповідний контент
-  document.querySelectorAll('.translation-content').forEach(content => {
-    if (content.dataset.language === language) {
-      content.classList.remove('hidden');
-    } else {
-      content.classList.add('hidden');
-    }
-  });
-}
-</script> 

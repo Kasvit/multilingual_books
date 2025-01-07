@@ -12,6 +12,9 @@
 #
 class Book < ApplicationRecord
   AVAILABLE_LANGUAGES = %w[uk ru en].freeze # Site.settings.languages
+
+  default_scope { order(created_at: :desc) }
+
   has_many :book_translations, dependent: :destroy
   has_many :chapters, dependent: :destroy
 

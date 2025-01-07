@@ -1,5 +1,11 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+      <%= link_to books_path, class: "text-blue-600 hover:text-blue-800 transition-colors flex items-center" do %>
+        ← Назад до списку книг
+      <% end %>
+    </div>
+
     <div class="bg-white rounded-lg shadow-lg p-6 mb-8" data-controller="tabs">
       <div class="border-b border-gray-200 mb-6">
         <nav class="-mb-px flex space-x-8" aria-label="Tabs">
@@ -39,15 +45,10 @@
       <h2 class="text-xl font-bold mb-4">Зміст</h2>
       <div class="space-y-2">
         <% @book.chapters.each do |chapter| %>
-          <%= link_to "Розділ #{chapter.position}", book_chapter_path(@book, chapter.position), 
+          <%= link_to "Розділ #{chapter.position}", book_chapter_path(@book, chapter.position),
               class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
         <% end %>
       </div>
     </div>
-
-    <div class="mt-6">
-      <%= link_to "← Назад до списку книг", books_path, 
-          class: "text-blue-600 hover:text-blue-800 transition-colors" %>
-    </div>
   </div>
-</div> 
+</div>

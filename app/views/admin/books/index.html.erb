@@ -4,10 +4,10 @@
     <%= link_to "New book", new_admin_book_path, class: "btn-primary", data: { turbo_frame: "modal" } %>
   </div>
 
-  <%= turbo_frame_tag "books" do %>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      <%= render @books %>
-    </div>
+  <div id="flash"></div>
+
+  <%= turbo_frame_tag "books", class: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" do %>
+    <%= render @books %>
   <% end %>
 
   <%= turbo_frame_tag "modal" %>

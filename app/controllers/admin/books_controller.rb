@@ -14,44 +14,32 @@ module Admin
       @book = Book.new
     end
 
-    def edit; end
-
     def create
       @book = Book.new(book_params)
 
       respond_to do |format|
         if @book.save
           format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully created.' }
-          format.turbo_stream do
-            flash.now[:notice] = 'Book was successfully created.'
-            render turbo_stream: [
-              turbo_stream.append('books', partial: 'book', locals: { book: @book }),
-              turbo_stream.remove('modal'),
-              turbo_stream.append('flash', partial: 'shared/flash', locals: { flash: flash })
-            ]
-          end
+          format.turbo_stream { flash.now[:notice] = 'Book was successfully created.' }
         else
           format.html { render :new, status: :unprocessable_entity }
-          format.turbo_stream { render :form_update, status: :unprocessable_entity }
+          format.turbo_stream { render :create, status: :unprocessable_entity }
         end
       end
+    end
+
+    def edit
+      render layout: false if turbo_frame_request?
     end
 
     def update
       respond_to do |format|
         if @book.update(book_params)
           format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully updated.' }
-          format.turbo_stream do
-            flash.now[:notice] = 'Book was successfully updated.'
-            render turbo_stream: [
-              turbo_stream.replace(@book),
-              turbo_stream.remove('modal'),
-              turbo_stream.append('flash', partial: 'shared/flash', locals: { flash: flash })
-            ]
-          end
+          format.turbo_stream { flash.now[:notice] = 'Book was successfully updated.' }
         else
           format.html { render :edit, status: :unprocessable_entity }
-          format.turbo_stream { render :form_update, status: :unprocessable_entity }
+          format.turbo_stream { render :update, status: :unprocessable_entity }
         end
       end
     end
@@ -68,7 +56,7 @@ module Admin
     private
 
     def set_book
-      @book = Book.find(params[:id])
+      @book = Book.includes(:book_translations, chapters: [:chapter_translations]).find(params[:id])
     end
 
     def book_params

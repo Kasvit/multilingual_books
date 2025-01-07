@@ -1,0 +1,14 @@
+<% if @book.errors.empty? %>
+  <%= turbo_stream.prepend "books", partial: "book", locals: { book: @book } %>
+  <%= turbo_stream.remove "modal" %>
+<% else %>
+  <%= turbo_stream.update "modal" do %>
+    <div class="modal">
+      <div class="modal-content">
+        <h2 class="text-2xl font-bold mb-4">New Book</h2>
+        <%= render "form", book: @book %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= turbo_stream.append "flash", partial: "shared/flash", locals: { flash: flash } %>

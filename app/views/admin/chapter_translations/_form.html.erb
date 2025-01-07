@@ -1,42 +1,39 @@
-<%= form_with(model: [:admin, @book, @chapter, translation], class: "space-y-4") do |form| %>
+<%= form_with(model: [@book, @chapter, translation],
+              url: translation.new_record? ?
+                   admin_book_chapter_chapter_translations_path(@book, @chapter) :
+                   admin_book_chapter_chapter_translation_path(@book, @chapter, translation.language),
+              class: "space-y-4") do |f| %>
   <% if translation.errors.any? %>
-    <div class="bg-red-50 p-4 rounded-lg">
-      <h2 class="text-red-700 text-lg font-semibold">
-        <%= pluralize(translation.errors.count, "error") %> prohibited this translation from being saved:
-      </h2>
-      <ul class="list-disc list-inside text-red-600">
-        <% translation.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+    <div class="error-messages">
+      <h2><%= pluralize(translation.errors.count, "error") %> prohibited this translation from being saved:</h2>
+      <ul>
+        <% translation.errors.each do |error| %>
+          <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <% if translation.new_record? %>
-    <div>
-      <%= form.label :language, class: "block text-sm font-medium text-gray-700" %>
-      <%= form.select :language,
-          options_for_select(
-            @chapter.book.selected_languages.map { |lang| [lang.upcase, lang] },
-            translation.language
-          ),
-          { prompt: "Select language" },
-          class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
-    </div>
-  <% end %>
-
   <div>
-    <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_field :title, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+    <%= f.label :language, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.select :language,
+                options_for_select(@chapter.book.selected_languages - (@chapter.chapter_translations.pluck(:language) - [translation.language]), translation.language),
+                {},
+                class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
   </div>
 
   <div>
-    <%= form.label :content, class: "block text-sm font-medium text-gray-700" %>
-    <%= form.text_area :content, rows: 10, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500" %>
+    <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :title, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+  </div>
+
+  <div>
+    <%= f.label :content, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :content, rows: 8, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
   </div>
 
   <div class="flex justify-end space-x-2">
-    <%= form.submit class: "btn-primary" %>
+    <%= f.submit class: "btn-primary" %>
     <%= link_to "Cancel", admin_book_chapter_path(@book, @chapter), class: "btn-secondary" %>
   </div>
 <% end %>

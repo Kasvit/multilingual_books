@@ -11,17 +11,21 @@
 
         <%# Chapter Navigation %>
         <div class="flex justify-between items-center mb-6">
-          <% if prev_chapter = @book.chapters.where("position < ?", @chapter.position).order(position: :desc).first %>
-            <%= link_to admin_book_chapter_path(@book, prev_chapter), class: "btn-secondary", data: { turbo: false } do %>
-              ← Previous Chapter
+          <div>
+            <% if prev_chapter = @book.chapters.where("position < ?", @chapter.position).order(position: :desc).first %>
+              <%= link_to admin_book_chapter_path(@book, prev_chapter), class: "btn-secondary", data: { turbo: false } do %>
+                ← Previous Chapter
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
 
-          <% if next_chapter = @book.chapters.where("position > ?", @chapter.position).order(:position).first %>
-            <%= link_to admin_book_chapter_path(@book, next_chapter), class: "btn-secondary", data: { turbo: false } do %>
-              Next Chapter →
+          <div>
+            <% if next_chapter = @book.chapters.where("position > ?", @chapter.position).order(:position).first %>
+              <%= link_to admin_book_chapter_path(@book, next_chapter), class: "btn-secondary", data: { turbo: false } do %>
+                Next Chapter →
+              <% end %>
             <% end %>
-          <% end %>
+          </div>
         </div>
 
         <%= render "translations", chapter: @chapter %>

@@ -15,8 +15,6 @@ module Admin
       @chapter = @book.chapters.build
     end
 
-    def edit; end
-
     def create
       @chapter = @book.chapters.build(chapter_params)
 
@@ -25,20 +23,15 @@ module Admin
           format.html do
             redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully created.'
           end
-          format.turbo_stream do
-            flash.now[:notice] = 'Chapter was successfully created.'
-            render turbo_stream: [
-              turbo_stream.append('chapters', partial: 'chapter', locals: { chapter: @chapter }),
-              turbo_stream.remove('modal'),
-              turbo_stream.append('flash', partial: 'shared/flash', locals: { flash: flash })
-            ]
-          end
+          format.turbo_stream { flash.now[:notice] = 'Chapter was successfully created.' }
         else
           format.html { render :new, status: :unprocessable_entity }
-          format.turbo_stream { render :form_update, status: :unprocessable_entity }
+          format.turbo_stream { render :create, status: :unprocessable_entity }
         end
       end
     end
+
+    def edit; end
 
     def update
       respond_to do |format|
@@ -46,17 +39,10 @@ module Admin
           format.html do
             redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully updated.'
           end
-          format.turbo_stream do
-            flash.now[:notice] = 'Chapter was successfully updated.'
-            render turbo_stream: [
-              turbo_stream.replace(@chapter),
-              turbo_stream.remove('modal'),
-              turbo_stream.append('flash', partial: 'shared/flash', locals: { flash: flash })
-            ]
-          end
+          format.turbo_stream { flash.now[:notice] = 'Chapter was successfully updated.' }
         else
           format.html { render :edit, status: :unprocessable_entity }
-          format.turbo_stream { render :form_update, status: :unprocessable_entity }
+          format.turbo_stream { render :update, status: :unprocessable_entity }
         end
       end
     end
@@ -66,13 +52,7 @@ module Admin
 
       respond_to do |format|
         format.html { redirect_to admin_book_chapters_url(@book), notice: 'Chapter was successfully destroyed.' }
-        format.turbo_stream do
-          flash.now[:notice] = 'Chapter was successfully destroyed.'
-          render turbo_stream: [
-            turbo_stream.remove(@chapter),
-            turbo_stream.append('flash', partial: 'shared/flash', locals: { flash: flash })
-          ]
-        end
+        format.turbo_stream { flash.now[:notice] = 'Chapter was successfully destroyed.' }
       end
     end
 

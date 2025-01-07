@@ -20,6 +20,8 @@
 #  fk_rails_...  (book_id => books.id)
 #
 class Chapter < ApplicationRecord
+  default_scope { order(created_at: :desc) }
+
   belongs_to :book
   has_many :chapter_translations, dependent: :destroy
 
@@ -28,6 +30,9 @@ class Chapter < ApplicationRecord
   validates :position, presence: true
 
   delegate :selected_languages, to: :book
+
+  broadcasts_to ->(chapter) { "books/#{chapter.book_id}/chapters" },
+                inserts_by: :prepend
 
   def to_param
     position.to_s

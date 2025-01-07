@@ -5,9 +5,13 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :books do
-      resources :book_translations, param: :id
+      resources :book_translations, param: :language do
+        get :edit, on: :member
+      end
       resources :chapters, param: :position do
-        resources :chapter_translations, param: :id
+        resources :chapter_translations, param: :language do
+          get :edit, on: :member
+        end
       end
     end
   end

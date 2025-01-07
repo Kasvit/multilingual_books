@@ -1,0 +1,2 @@
+<%= turbo_stream.replace 'chapter_translations', partial: 'admin/chapters/translations', locals: { chapter: @chapter } %>
+<%= turbo_stream.append 'flash', partial: 'shared/flash', locals: { flash: flash } %>

@@ -1,4 +1,9 @@
-<%= form_with(model: [:admin, book], class: "space-y-4") do |form| %>
+<%= form_with(
+      model: book,
+      url: book.new_record? ? admin_books_path : admin_book_path(book),
+      class: "space-y-4",
+      data: { turbo: true }
+    ) do |form| %>
   <% if book.errors.any? %>
     <div class="bg-red-50 p-4 rounded-lg">
       <h2 class="text-red-700 text-lg font-semibold"><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
@@ -25,6 +30,12 @@
 
   <div class="flex justify-end space-x-2">
     <%= form.submit class: "btn-primary" %>
-    <%= link_to "Cancel", admin_books_path, class: "btn-secondary" %>
+    <%= link_to "Cancel",
+        book.new_record? ? admin_books_path : admin_book_path(book),
+        class: "btn-secondary",
+        data: {
+          action: "click->modal#close",
+          turbo_frame: "_top"
+        } %>
   </div>
 <% end %>

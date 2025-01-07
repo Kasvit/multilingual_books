@@ -22,9 +22,14 @@
 #  fk_rails_...  (chapter_id => chapters.id)
 #
 class ChapterTranslation < ApplicationRecord
+  default_scope { order(created_at: :desc) }
+
   belongs_to :chapter
 
   validates :language, presence: true
   validates :title, presence: true
   validates :language, uniqueness: { scope: :chapter_id }
+
+  broadcasts_to ->(translation) { "books/#{translation.chapter.book_id}/chapters/#{translation.chapter.position}" },
+                inserts_by: :prepend
 end
