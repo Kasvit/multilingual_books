@@ -1,5 +1,6 @@
 <% if @book.errors.empty? %>
-  <%= turbo_stream.prepend "books", partial: "book", locals: { book: @book } %>
+  <%= turbo_stream.prepend "admin_books", @book %>
+  <%= turbo_stream.prepend "books", @book %>
   <%= turbo_stream.remove "modal" %>
 <% else %>
   <%= turbo_stream.update "modal" do %>
