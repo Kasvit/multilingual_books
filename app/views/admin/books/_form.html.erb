@@ -29,10 +29,10 @@
   </div>
 
   <div class="flex justify-end space-x-2">
-    <%= form.submit class: "btn-primary" %>
+    <%= form.submit class: "btn btn-primary" %>
     <%= link_to "Cancel",
         book.new_record? ? admin_books_path : admin_book_path(book),
-        class: "btn-secondary",
+        class: "btn btn-ghost",
         data: {
           action: "click->modal#close",
           turbo_frame: "_top"

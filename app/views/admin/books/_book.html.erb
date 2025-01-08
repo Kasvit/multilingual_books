@@ -18,11 +18,11 @@
       </div>
 
       <div class="flex gap-2">
-        <%= link_to "View", admin_book_path(book), class: "btn-secondary", data: { turbo: false } %>
+        <%= link_to "View", admin_book_path(book), class: "btn btn-ghost", data: { turbo: false } %>
         <%= link_to "Edit", edit_admin_book_path(book),
-            class: "btn-secondary",
+            class: "btn btn-ghost",
             data: { turbo_frame: "modal" } %>
-        <%= button_to "Delete", admin_book_path(book), method: :delete, class: "btn-danger", form: { data: { turbo_confirm: "Are you sure?" } } %>
+        <%= button_to "Delete", admin_book_path(book), method: :delete, class: "btn btn-error", form: { data: { turbo_confirm: "Are you sure?" } } %>
       </div>
     </div>
   </div>

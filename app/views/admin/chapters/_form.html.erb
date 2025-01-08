@@ -19,11 +19,11 @@
   </div>
 
   <div class="flex justify-end space-x-2">
-    <%= form.submit class: "btn-primary" %>
+    <%= form.submit class: "btn btn-primary" %>
     <% if @chapter.persisted? %>
-      <%= link_to "Cancel", admin_book_chapter_path(@book, @chapter), class: "btn-secondary", data: { turbo: false } %>
+      <%= link_to "Cancel", admin_book_chapter_path(@book, @chapter), class: "btn btn-ghost", data: { turbo: false } %>
     <% else %>
-      <%= link_to "Cancel", admin_book_path(@book), class: "btn-secondary", data: { turbo: false } %>
+      <%= link_to "Cancel", admin_book_path(@book), class: "btn btn-ghost", data: { turbo: false } %>
     <% end %>
   </div>
 <% end %>
