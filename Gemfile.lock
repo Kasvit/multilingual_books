@@ -153,6 +153,8 @@ GEM
     globalid (1.2.1)
       activesupport (>= 6.1)
     hashdiff (1.1.2)
+    heroicon (1.0.0)
+      rails (>= 5.2)
     htmlentities (4.3.4)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -193,6 +195,7 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
+    method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.4)
     msgpack (1.7.5)
@@ -449,6 +452,10 @@ GEM
     useragent (0.16.11)
     vcr (6.3.1)
       base64
+    view_component (3.21.0)
+      activesupport (>= 5.2.0, < 8.1)
+      concurrent-ruby (~> 1.0)
+      method_source (~> 1.0)
     webmock (3.24.0)
       addressable (>= 2.8.0)
       crack (>= 0.3.2)
@@ -479,6 +486,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails
   faker
+  heroicon
   htmlentities
   jbuilder
   jsbundling-rails
@@ -519,6 +527,7 @@ DEPENDENCIES
   turbo-rails
   tzinfo-data
   vcr
+  view_component
   webmock
 
 RUBY VERSION
