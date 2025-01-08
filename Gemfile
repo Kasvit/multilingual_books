@@ -12,8 +12,6 @@ gem 'propshaft'
 gem 'pg', '~> 1.1'
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '>= 5.0'
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
-gem 'importmap-rails'
 # Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
 gem 'jsbundling-rails'
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -35,6 +33,7 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
+gem 'sqlite3'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
@@ -52,20 +51,23 @@ group :development, :test do
   gem 'brakeman', require: false
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem 'database_cleaner-active_record'
+  gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
+  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rubocop-rails-omakase', require: false
-  gem 'dotenv-rails'
-  gem 'webmock'
+  gem 'shoulda-matchers'
   gem 'vcr'
+  gem 'webmock'
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   # gem "web-console"
   gem 'annotaterb'
+  gem 'debase'
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'rails_live_reload'
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-lsp'
@@ -73,6 +75,7 @@ group :development do
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
   gem 'rubocop-rspec_rails', require: false
+  gem 'ruby-debug-ide'
   gem 'ruby-lsp'
   gem 'ruby-lsp-rails'
   gem 'ruby-lsp-rspec'
@@ -84,14 +87,14 @@ group :test do
   gem 'database_cleaner-redis'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', '~> 6.0'
   gem 'simplecov', require: false
 end
 
 gem 'rubocop', require: false
 gem 'ruby-openai'
 
-gem 'nokogiri'
-gem 'open-uri'
+# for book parsing
 gem 'charlock_holmes'
 gem 'htmlentities'
+gem 'nokogiri'
+gem 'open-uri'

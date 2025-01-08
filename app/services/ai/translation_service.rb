@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ai
   class TranslationService < Ai::BaseService
     CHUNK_SIZE = 1000
@@ -35,7 +37,7 @@ module Ai
       puts system_prompt
       response = @client.chat(
         parameters: {
-          model: "gpt-4",
+          model: 'gpt-4o-mini',
           messages: build_messages(text),
           temperature: 0.3,
           presence_penalty: 0.0,
@@ -43,8 +45,8 @@ module Ai
         }
       )
 
-      content = response.dig("choices", 0, "message", "content")
-      raise Ai::TranslationError, "No translation received from OpenAI" if content.nil?
+      content = response.dig('choices', 0, 'message', 'content')
+      raise Ai::TranslationError, 'No translation received from OpenAI' if content.nil?
 
       # Перевіряємо наявність рядка з memory_key
       unless content.include?("Retrieve entities by memory_key: '#{memory_key}'")
@@ -57,11 +59,11 @@ module Ai
     def build_messages(text)
       [
         {
-          role: "system",
+          role: 'system',
           content: system_prompt
         },
         {
-          role: "user",
+          role: 'user',
           content: text
         }
       ]
@@ -91,7 +93,7 @@ module Ai
     end
 
     def memory_key
-      @memory_key ||= "translation_service:#{Time.now.to_i.to_s+@original_language.to_s+@target_language.to_s}"
+      @memory_key ||= "translation_service:#{Time.now.to_i.to_s + @original_language.to_s + @target_language.to_s}"
     end
 
     def split_into_chunks(text)
@@ -99,9 +101,9 @@ module Ai
     end
 
     def validate_language!
-      unless SUPPORTED_LANGUAGES.include?(@target_language) && SUPPORTED_LANGUAGES.include?(@original_language)
-        raise ArgumentError, "Unsupported language. Supported languages: #{SUPPORTED_LANGUAGES.join(', ')}"
-      end
+      return if SUPPORTED_LANGUAGES.include?(@target_language) && SUPPORTED_LANGUAGES.include?(@original_language)
+
+      raise ArgumentError, "Unsupported language. Supported languages: #{SUPPORTED_LANGUAGES.join(', ')}"
     end
   end
-end 
+end

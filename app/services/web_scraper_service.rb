@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class WebScraperService
   PARSER_MAPPING = {
     /xn--80ac9aeh6f\.xn--p1ai/ => '.overflow-hidden.text-base.leading-5',

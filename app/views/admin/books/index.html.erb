@@ -1,0 +1,16 @@
+<%= turbo_stream_from "admin_books" %>
+
+<div class="container mx-auto px-4 py-8">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold">Books</h1>
+    <%= link_to "New book", new_admin_book_path, class: "btn-primary", data: { turbo_frame: "modal" } %>
+  </div>
+
+  <div id="flash"></div>
+
+  <%= turbo_frame_tag "admin_books", class: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" do %>
+    <%= render @books %>
+  <% end %>
+
+  <%= turbo_frame_tag "modal" %>
+</div>

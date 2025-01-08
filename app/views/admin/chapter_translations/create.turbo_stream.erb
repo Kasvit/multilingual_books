@@ -1,0 +1,14 @@
+<% if @translation.errors.empty? %>
+  <%= turbo_stream.prepend 'admin_chapter_#{@chapter.id}_translations', partial: 'admin/chapter_translations/chapter_translation', locals: { chapter: @chapter, translation: @translation } %>
+  <%= turbo_stream.remove 'modal' %>
+<% else %>
+  <%= turbo_stream.update "modal" do %>
+    <div class="modal">
+      <div class="modal-content">
+        <h2 class="text-2xl font-bold mb-4">New Translation</h2>
+        <%= render "form", translation: @translation %>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+<%= turbo_stream.append 'flash', partial: 'shared/flash', locals: { flash: flash } %>

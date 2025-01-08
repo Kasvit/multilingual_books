@@ -96,7 +96,6 @@ GEM
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
     charlock_holmes (0.7.9)
-    coderay (1.1.3)
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
     crack (1.0.0)
@@ -113,6 +112,9 @@ GEM
       database_cleaner-core (~> 2.0.0)
       redis
     date (3.4.1)
+    debase (0.2.8)
+      debase-ruby_core_source (>= 3.3.6)
+    debase-ruby_core_source (3.3.6)
     debug (1.10.0)
       irb (~> 1.10)
       reline (>= 0.3.8)
@@ -154,10 +156,6 @@ GEM
     htmlentities (4.3.4)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
-    importmap-rails (2.1.0)
-      actionpack (>= 6.0.0)
-      activesupport (>= 6.0.0)
-      railties (>= 6.0.0)
     io-console (0.8.0)
     irb (1.14.3)
       rdoc (>= 4.0.0)
@@ -195,7 +193,6 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.4)
     msgpack (1.7.5)
@@ -237,9 +234,6 @@ GEM
       activesupport (>= 7.0.0)
       rack
       railties (>= 7.0.0)
-    pry (0.15.2)
-      coderay (~> 1.1)
-      method_source (~> 1.0)
     psych (5.2.2)
       date
       stringio
@@ -365,6 +359,8 @@ GEM
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
       rubocop-rspec (~> 3, >= 3.0.1)
+    ruby-debug-ide (0.7.4)
+      rake (>= 0.8.1)
     ruby-lsp (0.22.1)
       language_server-protocol (~> 3.17.0)
       prism (>= 1.2, < 2.0)
@@ -412,6 +408,8 @@ GEM
       railties (>= 7.1)
       thor (~> 1.3.1)
     sorbet-runtime (0.5.11710)
+    sqlite3 (2.5.0-x86_64-darwin)
+    sqlite3 (2.5.0-x86_64-linux-gnu)
     sshkit (1.23.2)
       base64
       net-scp (>= 1.1.2)
@@ -476,12 +474,12 @@ DEPENDENCIES
   cssbundling-rails
   database_cleaner-active_record
   database_cleaner-redis
+  debase
   debug
   dotenv-rails
   factory_bot_rails
   faker
   htmlentities
-  importmap-rails
   jbuilder
   jsbundling-rails
   kamal
@@ -489,7 +487,6 @@ DEPENDENCIES
   open-uri
   pg (~> 1.1)
   propshaft
-  pry
   puma (>= 5.0)
   rails (~> 8.0.1)
   rails-controller-testing
@@ -504,16 +501,18 @@ DEPENDENCIES
   rubocop-rails-omakase
   rubocop-rspec
   rubocop-rspec_rails
+  ruby-debug-ide
   ruby-lsp
   ruby-lsp-rails
   ruby-lsp-rspec
   ruby-openai
   selenium-webdriver
-  shoulda-matchers (~> 6.0)
+  shoulda-matchers
   simplecov
   solid_cable
   solid_cache
   solid_queue
+  sqlite3
   standard
   stimulus-rails
   thruster

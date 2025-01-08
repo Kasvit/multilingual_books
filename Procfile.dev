@@ -1,2 +1,3 @@
-web: bin/rails server
-css: bin/rails tailwindcss:watch
+web: bundle exec rails server -p ${PORT:-3000}
+css: bundle exec yarn build:css --watch
+js: yarn build --watch

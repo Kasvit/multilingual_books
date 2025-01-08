@@ -82,3 +82,9 @@ yarn-debug.log*
 /config/newrelic.yml
 /config/cable.yml
 /config/secrets.yml
+
+/spec/examples.txt
+
+# SimpleCov
+/coverage
+.DS_Store

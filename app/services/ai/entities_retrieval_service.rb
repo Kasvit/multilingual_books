@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ai
   class EntitiesRetrievalService < Ai::BaseService
     def initialize(memory_key)
@@ -8,7 +10,7 @@ module Ai
     def retrieve
       response = @client.chat(
         parameters: {
-          model: "gpt-4",
+          model: 'gpt-4o-mini',
           messages: build_messages,
           temperature: 0.1,
           presence_penalty: 0.0,
@@ -26,11 +28,11 @@ module Ai
     def build_messages
       [
         {
-          role: "system",
+          role: 'system',
           content: system_prompt
         },
         {
-          role: "user",
+          role: 'user',
           content: "Retrieve entities by #{@memory_key}"
         }
       ]
@@ -52,12 +54,12 @@ module Ai
     end
 
     def parse_response(response)
-      content = response.dig("choices", 0, "message", "content")
-      raise AI::RetrievalError, "No content received from OpenAI" if content.nil?
+      content = response.dig('choices', 0, 'message', 'content')
+      raise AI::RetrievalError, 'No content received from OpenAI' if content.nil?
 
       JSON.parse(content)
     rescue JSON::ParserError => e
       raise AI::RetrievalError, "Failed to parse entities: #{e.message}"
     end
   end
-end 
+end

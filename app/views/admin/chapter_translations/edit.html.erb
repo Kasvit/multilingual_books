@@ -1,0 +1,8 @@
+<%= turbo_frame_tag "modal" do %>
+  <div class="modal">
+    <div class="modal-content">
+      <h2 class="text-lg font-semibold mb-4">Edit Chapter Translation</h2>
+      <%= render "form", translation: @translation %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+<%= turbo_stream.remove "admin_book_#{@book.id}_translations_#{@translation.id}" %>
+<%= turbo_stream.append 'flash', partial: 'shared/flash', locals: { flash: flash } %>

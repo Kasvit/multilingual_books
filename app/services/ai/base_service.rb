@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ai
   class BaseService
     DEFAULT_TIMEOUT = 600 # 10 minutes
@@ -16,10 +18,10 @@ module Ai
       when OpenAI::Error
         raise Ai::Error, "OpenAI API error: #{error.message}"
       when Faraday::TimeoutError
-        raise Ai::Error, "Request timeout. The operation took too long to complete."
+        raise Ai::Error, 'Request timeout. The operation took too long to complete.'
       else
         raise Ai::Error, "Service failed: #{error.message}"
       end
     end
   end
-end 
+end

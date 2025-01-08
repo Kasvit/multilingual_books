@@ -1,0 +1,29 @@
+<%= turbo_frame_tag dom_id(chapter, :admin) do %>
+  <div class="bg-gray-50 rounded-lg p-4">
+    <div class="flex justify-between items-center">
+      <div>
+        <h3 class="font-semibold">Chapter <%= chapter.position %></h3>
+        <div class="mt-2 space-y-1">
+          <% chapter.chapter_translations.each do |translation| %>
+            <div class="text-sm text-gray-600">
+              <%= translation.language.upcase %>: <%= translation.title %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="flex space-x-2">
+        <%= link_to "View", admin_book_chapter_path(chapter.book, chapter.id),
+            class: "btn-secondary text-sm",
+            data: { turbo: false } %>
+        <%= link_to "Edit", edit_admin_book_chapter_path(chapter.book, chapter.id),
+            class: "btn-secondary text-sm",
+            data: { turbo_frame: "modal" } %>
+        <%= button_to "Delete", admin_book_chapter_path(chapter.book, chapter.id),
+            method: :delete,
+            class: "btn-danger text-sm",
+            form: { data: { turbo_confirm: "Are you sure?" } } %>
+      </div>
+    </div>
+  </div>
+<% end %>
