@@ -56,15 +56,15 @@ module Admin
     private
 
     def set_book
-      @book = Book.find(params[:book_id])
+      @book = Book.includes(chapters: :chapter_translations).find(params[:book_id])
     end
 
     def set_chapter
-      @chapter = @book.chapters.find_by!(position: params[:chapter_position])
+      @chapter = @book.chapters.find(params[:chapter_id])
     end
 
     def set_translation
-      @translation = @chapter.chapter_translations.find_by!(language: params[:language])
+      @translation = @chapter.chapter_translations.find(params[:id])
     end
 
     def translation_params

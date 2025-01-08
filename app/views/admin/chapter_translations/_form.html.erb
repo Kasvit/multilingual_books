@@ -1,7 +1,7 @@
 <%= form_with(model: [@book, @chapter, translation],
               url: translation.new_record? ?
-                   admin_book_chapter_chapter_translations_path(@book, @chapter) :
-                   admin_book_chapter_chapter_translation_path(@book, @chapter, translation.language),
+                   admin_book_chapter_chapter_translations_path(@book, @chapter.id) :
+                   admin_book_chapter_chapter_translation_path(@book, @chapter.id, translation.id),
               class: "space-y-4") do |f| %>
   <% if translation.errors.any? %>
     <div class="error-messages">

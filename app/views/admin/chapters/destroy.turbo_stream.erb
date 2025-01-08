@@ -1,2 +1,2 @@
-<%= turbo_stream.remove @chapter %>
+<%= turbo_stream.remove dom_id(@chapter, :admin) %>
 <%= turbo_stream.append 'flash', partial: 'shared/flash', locals: { flash: flash } %>

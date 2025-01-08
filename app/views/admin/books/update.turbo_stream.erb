@@ -1,6 +1,6 @@
 <% if @book.errors.empty? %>
   <%= turbo_stream.remove "modal" %>
-  <%= turbo_stream.replace "page_content", partial: "admin/books/show_content", locals: { book: @book } %>
+  <%= turbo_stream.replace "admin_book_#{@book.id}", @book %>
 <% else %>
   <%= turbo_stream.update "modal" do %>
     <div class="modal">

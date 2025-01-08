@@ -1,5 +1,5 @@
 <% if @translation.errors.empty? %>
-  <%= turbo_stream.replace "book_#{@book.id}", partial: 'admin/books/book', locals: { book: @book } %>
+  <%= turbo_stream.replace "admin_book_#{@book.id}_translations_#{@translation.id}", partial: 'admin/book_translations/book_translation', locals: { book: @book, translation: @translation } %>
   <%= turbo_stream.remove 'modal' %>
 <% else %>
   <%= turbo_stream.update "modal" do %>

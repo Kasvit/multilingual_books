@@ -53,7 +53,7 @@ module Admin
     end
 
     def set_translation
-      @translation = @book.book_translations.find_by!(language: params[:language])
+      @translation = @book.book_translations.find(params[:id])
     end
 
     def translation_params

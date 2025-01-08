@@ -30,6 +30,6 @@ class ChapterTranslation < ApplicationRecord
   validates :title, presence: true
   validates :language, uniqueness: { scope: :chapter_id }
 
-  broadcasts_to ->(translation) { "books/#{translation.chapter.book_id}/chapters/#{translation.chapter.position}" },
-                inserts_by: :prepend
+  # broadcasts_to ->(translation) { "admin_chapter_#{translation.chapter_id}_translations_#{translation.id}" },
+  #               inserts_by: :prepend
 end

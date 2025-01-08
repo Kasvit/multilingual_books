@@ -9,7 +9,10 @@ module Admin
       @chapters = @book.chapters.includes(:chapter_translations)
     end
 
-    def show; end
+    def show
+      @prev_chapter_id = @book.chapters.where("position < ?", @chapter.position).order(position: :desc).pluck(:id).first
+      @next_chapter_id = @book.chapters.where("position > ?", @chapter.position).order(:position).pluck(:id).last
+    end
 
     def new
       @chapter = @book.chapters.build
@@ -20,9 +23,7 @@ module Admin
 
       respond_to do |format|
         if @chapter.save
-          format.html do
-            redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully created.'
-          end
+          format.html { redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully created.' }
           format.turbo_stream { flash.now[:notice] = 'Chapter was successfully created.' }
         else
           format.html { render :new, status: :unprocessable_entity }
@@ -35,10 +36,8 @@ module Admin
 
     def update
       respond_to do |format|
-        if @chapter.update(chapter_params)
-          format.html do
-            redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully updated.'
-          end
+        if @chapter.update!(chapter_params)
+          format.html { redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully updated.' }
           format.turbo_stream { flash.now[:notice] = 'Chapter was successfully updated.' }
         else
           format.html { render :edit, status: :unprocessable_entity }
@@ -63,7 +62,7 @@ module Admin
     end
 
     def set_chapter
-      @chapter = @book.chapters.find_by!(position: params[:position])
+      @chapter = @book.chapters.find(params[:id])
     end
 
     def chapter_params

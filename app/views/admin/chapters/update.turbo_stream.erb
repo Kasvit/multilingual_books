@@ -1,5 +1,5 @@
 <% if @chapter.errors.empty? %>
-  <%= turbo_stream.replace @chapter %>
+  <%= turbo_stream.replace 'admin_chapters', @chapter %>
   <%= turbo_stream.remove 'modal' %>
 <% else %>
   <%= turbo_stream.update "modal" do %>

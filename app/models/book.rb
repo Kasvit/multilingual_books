@@ -23,8 +23,8 @@ class Book < ApplicationRecord
   after_create :generate_translations
   after_create :generate_chapters
 
-  broadcasts_to ->(_book) { 'books' }, inserts_by: :prepend
-  broadcasts_to ->(_book) { 'admin_books' }, inserts_by: :prepend
+  # broadcasts_to ->(_book) { 'books' }, inserts_by: :prepend
+  # broadcasts_to ->(_book) { 'admin_books' }, inserts_by: :prepend
 
   private
 
