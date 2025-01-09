@@ -6,7 +6,7 @@
         <%= link_to "Edit",
             edit_admin_book_book_translation_path(book, translation.id),
             class: "btn btn-ghost",
-            data: { turbo_frame: "modal" } %>
+            data: { turbo_stream: true } %>
         <%= button_to "Remove",
             admin_book_book_translation_path(book, translation.id),
             method: :delete,

@@ -12,6 +12,12 @@ module Admin
 
     def new
       @book = Book.new
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_books_path
+        end
+      end
     end
 
     def create
@@ -29,16 +35,19 @@ module Admin
     end
 
     def edit
-      render layout: false if turbo_frame_request?
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_book_path(@book)
+        end
+      end
     end
 
     def update
       respond_to do |format|
         if @book.update(book_params)
-          format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully updated.' }
           format.turbo_stream { flash.now[:notice] = 'Book was successfully updated.' }
         else
-          format.html { render :edit, status: :unprocessable_entity }
           format.turbo_stream { render :update, status: :unprocessable_entity }
         end
       end

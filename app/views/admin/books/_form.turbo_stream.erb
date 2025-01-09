@@ -1,0 +1,25 @@
+<%= form_with(model: [:admin, book], local: false, data: {id: 'modal-form'}) do |form| %>
+  <%= render "shared/modal", id: "book-form-modal" do %>
+    <div class="flex flex-col mb-2">
+      <%= form.label :isbn, class: "mb-1 uppercase font-medium" %>
+      <%= form.text_field :isbn, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:isbn].any?}" %>
+      <% if book.errors[:isbn].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= book.errors[:isbn].first %></p>
+      <% end %>
+    </div>
+    <div class="flex flex-col mb-2">
+      <%= form.label :selected_languages, class: "mb-1 text-sm font-medium" %>
+      <%= form.select :selected_languages, Book::AVAILABLE_LANGUAGES,
+          class: "form-select w-full rounded-md #{'border-red-500' if book.errors[:selected_languages].any?}",
+          multiple: true %>
+      <% if book.errors[:selected_languages].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= book.errors[:selected_languages].first %></p>
+      <% end %>
+    </div>
+    <%= content_for :modal_actions do %>
+      <div>
+        <%= form.submit class: "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

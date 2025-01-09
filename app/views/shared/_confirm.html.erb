@@ -1,0 +1,21 @@
+<dialog id="confirm" class="modal" data-controller="modal" data-action="click@window->modal#handleOutsideClick">
+  <div
+    class="modal-overlay fixed inset-0 bg-black/50 z-40"
+    data-modal-target="overlay"
+  >
+  </div>
+
+  <div class="modal-box relative z-50">
+    <div class="modal-content modal__content">
+      <h3 id="confirm-title">
+      <div id="confirm-body">
+        <p>Default confirm message.</p>
+        <p>Optionally replaced by `data-confirm-details` attribute</p>
+      </div>
+    </div>
+    <div class="modal-action">
+      <button id="confirm-accept" class="btn btn-primary">Yes, I'm Sure</button>
+      <button class="confirm-cancel btn btn-secondary">Cancel</button>
+    </div>
+  </div>
+</dialog>

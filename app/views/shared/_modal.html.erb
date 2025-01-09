@@ -1,0 +1,22 @@
+<dialog
+  data-controller="modal"
+  class="modal hidden"
+  id="<%= id %>"
+  data-dialog-auto-close-timeout-value="<%= local_assigns[:auto_close_timeout] %>"
+  data-action="click@window->modal#handleOutsideClick"
+>
+  <div class="modal-overlay fixed inset-0 bg-black/50 z-40" data-modal-target="overlay"></div>
+
+  <div class="modal-box relative z-50">
+    <div class="modal-content">
+      <%= yield %>
+
+      <div class="modal-action">
+        <%= yield :modal_actions %>
+        <button data-action="click->modal#close:prevent" class="btn btn-ghost">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</dialog>

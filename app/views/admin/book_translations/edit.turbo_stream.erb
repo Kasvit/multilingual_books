@@ -1,0 +1,3 @@
+<%= turbo_stream.upsert_modal("#book-translation-form-modal", partial: "admin/book_translations/form", locals: { book: @book, translation: @translation }) %>
+
+<%= turbo_stream.open_modal("#book-translation-form-modal") %>
