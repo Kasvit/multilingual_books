@@ -5,7 +5,7 @@ module.exports = {
     './app/helpers/**/*.rb',
     './app/assets/stylesheets/**/*.css',
     './app/javascript/**/*.js',
-    './app/views/**/*.{erb,haml,html,slim}',
+    './app/views/**/*.{erb,haml,html,slim,turbo_stream}',
     './config/initializers/heroicon.rb',
     './app/components/**/*.{html,erb,rb}',
   ],
