@@ -30,7 +30,7 @@ class Chapter < ApplicationRecord
   validates :position, presence: true
   validates :position, uniqueness: { scope: :book_id }
   validates :position, numericality: { greater_than: 0 }
-  
+
   delegate :selected_languages, to: :book
 
   def to_param

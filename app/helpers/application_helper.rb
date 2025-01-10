@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def open_modal(title, content, footer = nil)
-    turbo_stream.replace "modal", partial: "shared/modal", locals: {
+    turbo_stream.replace 'modal', partial: 'shared/modal', locals: {
       title: title,
       content: content,
       footer: footer
@@ -14,6 +14,6 @@ module ApplicationHelper
   end
 
   def close_modal
-    turbo_stream.replace "modal", "<div id='modal' class='modal' style='display:none;'></div>"
+    turbo_stream.replace 'modal', "<div id='modal' class='modal' style='display:none;'></div>"
   end
 end
