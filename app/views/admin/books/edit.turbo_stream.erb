@@ -1,3 +1,1 @@
-<%= turbo_stream.upsert_modal("#book-form-modal", partial: "admin/books/form", locals: { book: @book }) %>
-
-<%= turbo_stream.open_modal("#book-form-modal") %>
+<%= open_modal("Edit Book", render("admin/books/form", book: @book)) %>

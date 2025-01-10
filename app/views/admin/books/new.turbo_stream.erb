@@ -1,5 +1,1 @@
-<%= turbo_stream.replace "modal", partial: "shared/modal", locals: {
-  title: "New Book",
-  content: render("admin/books/form", book: @book),
-  footer: "<button class='btn btn-secondary' data-action='modal#close'>Close</button>"
-} %>
+<%= open_modal("New Book", render("admin/books/form", book: @book)) %>
