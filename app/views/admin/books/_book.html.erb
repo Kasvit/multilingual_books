@@ -22,7 +22,7 @@
         <%= link_to "Edit", edit_admin_book_path(book),
             class: "btn btn-warning",
             data: { turbo_stream: true } %>
-        <%= button_to "Delete", admin_book_path(book), method: :delete, class: "btn btn-error", data: { "turbo-confirm": 'Are you sure?', "turbo-method": :delete } %>
+        <%= button_to "Delete", admin_book_path(book), method: :delete, class: "btn btn-error", data: { turbo_confirm: 'Are you sure?' } %>
       </div>
     </div>
   </div>
