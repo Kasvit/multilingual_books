@@ -12,6 +12,12 @@ module Admin
 
     def new
       @book = Book.new
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_books_path
+        end
+      end
     end
 
     def create
@@ -29,7 +35,12 @@ module Admin
     end
 
     def edit
-      render layout: false if turbo_frame_request?
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_book_path(@book)
+        end
+      end
     end
 
     def update

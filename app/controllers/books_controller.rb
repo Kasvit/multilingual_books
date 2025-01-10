@@ -6,10 +6,8 @@ class BooksController < ApplicationController
   end
 
   def show
-    @book = Book.includes(
-      :book_translations,
-      chapters: [:chapter_translations]
-    ).references(:chapters)
+    @book = Book.includes(:book_translations, chapters: [:chapter_translations])
+                .references(:chapters)
                 .where(id: params[:id])
                 .order('chapters.position ASC')
                 .first!

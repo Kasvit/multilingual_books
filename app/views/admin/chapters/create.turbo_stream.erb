@@ -1,14 +1,7 @@
 <% if @chapter.errors.empty? %>
+  <%= close_modal %>
   <%= turbo_stream.prepend 'admin_chapters', @chapter %>
-  <%= turbo_stream.remove 'modal' %>
+  <%= turbo_stream.prepend "flash", partial: "shared/flash" %>
 <% else %>
-  <%= turbo_stream.update "modal" do %>
-    <div class="modal">
-      <div class="modal-content">
-        <h2 class="text-2xl font-bold mb-4">New Chapter</h2>
-        <%= render "form", chapter: @chapter %>
-      </div>
-    </div>
-  <% end %>
+  <%= open_modal("New Chapter", render("admin/chapters/form", chapter: @chapter)) %>
 <% end %>
-<%= turbo_stream.append 'flash', partial: 'shared/flash', locals: { flash: flash } %>

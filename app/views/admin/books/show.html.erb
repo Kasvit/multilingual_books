@@ -3,70 +3,62 @@
 
 <div class="container mx-auto px-4 py-8">
   <div id="page_content">
-  <div class="bg-white rounded-lg shadow p-6">
-    <div class="mb-6">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Book Details</h1>
-        <div class="flex space-x-2">
-          <%= link_to "Edit", edit_admin_book_path(@book),
-              class: "btn-secondary",
-              data: { turbo_frame: "modal" } %>
-          <%= link_to "Back", admin_books_path, class: "btn-secondary", data: { turbo: false } %>
-        </div>
-      </div>
-
-      <div class="mb-4">
-        <strong>ISBN:</strong>
-        <%= @book.isbn %>
-      </div>
-
-      <div class="mb-4">
-        <strong>Selected Languages:</strong>
-        <%=@book.selected_languages.join(", ") %>
-      </div>
-
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-xl font-semibold">Translations</h2>
-        <% available_languages = @book.selected_languages - @book.book_translations.pluck(:language) %>
-        <% if available_languages.any? %>
-          <div class="relative inline-block">
-            <select onchange="window.location.href=this.value"
-                    class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
-              <option value="">Add Translation</option>
-              <% available_languages.each do |lang| %>
-                <option value="<%= new_admin_book_book_translation_path(@book, language: lang) %>">
-                  Add <%= lang.upcase %>
-                </option>
-              <% end %>
-            </select>
+    <div class="bg-white rounded-lg shadow p-6">
+      <div class="mb-6">
+        <div class="flex justify-between items-center mb-6">
+          <h1 class="text-2xl font-bold">Book Details</h1>
+          <div class="flex space-x-2">
+            <%= link_to "Edit", edit_admin_book_path(@book),
+                class: "btn btn-ghost",
+                data: { turbo_stream: true } %>
+            <%= link_to "Back", admin_books_path, class: "btn btn-ghost", data: { turbo: false } %>
           </div>
-        <% end %>
-      </div>
+        </div>
 
-      <% @book.book_translations.each do |translation| %>
-        <%= turbo_frame_tag "admin_book_#{@book.id}_translations", class: "space-y-4" do %>
-          <%= render "admin/book_translations/book_translation", book: @book, translation: translation %>
-        <% end %>
-      <% end %>
+        <div class="mb-4">
+          <strong>ISBN:</strong>
+          <%= @book.isbn %>
+        </div>
 
+        <div class="mb-4">
+          <strong>Selected Languages:</strong>
+          <%=@book.selected_languages.join(", ") %>
+        </div>
 
-      <div class="mt-8">
         <div class="flex justify-between items-center mb-4">
-          <h2 class="text-xl font-semibold">Chapters</h2>
-          <%= link_to "New Chapter", new_admin_book_chapter_path(@book),
-              class: "btn-primary",
-              data: { turbo_frame: "modal" } %>
+          <h2 class="text-xl font-semibold">Translations</h2>
+          <% available_languages = @book.selected_languages - @book.book_translations.pluck(:language) %>
+          <% if available_languages.any? %>
+            <div class="relative inline-block">
+              <%= link_to "New Translation", new_admin_book_book_translation_path(@book),
+                class: "btn btn-primary",
+                data: { turbo_stream: true } %>
+            </div>
+          <% end %>
         </div>
 
-        <%= turbo_frame_tag "admin_chapters" do %>
-          <div class="space-y-4">
-            <%= render @book.chapters %>
-          </div>
+        <% @book.book_translations.each do |translation| %>
+          <%= turbo_frame_tag "admin_book_#{@book.id}_translations", class: "space-y-4" do %>
+            <%= render "admin/book_translations/book_translation", book: @book, translation: translation %>
+          <% end %>
         <% end %>
+
+
+        <div class="mt-8">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Chapters</h2>
+            <%= link_to "New Chapter", new_admin_book_chapter_path(@book),
+                class: "btn btn-primary",
+                data: { turbo_stream: true } %>
+          </div>
+
+          <%= turbo_frame_tag "admin_chapters" do %>
+            <div class="space-y-4">
+              <%= render @book.chapters %>
+            </div>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-</div>
-
-  <%= turbo_frame_tag "modal" %>
 </div>

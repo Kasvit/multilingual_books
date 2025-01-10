@@ -6,15 +6,13 @@
       <div class="mb-6">
         <div class="flex justify-between items-center mb-4">  
           <h1 class="text-2xl font-bold">Chapter <%= @chapter.position %></h1>
-          <%= link_to admin_book_path(@book), class: "text-gray-500 hover:text-gray-700", data: { turbo: false } do %>
-            Back to <%= @book.book_translations.first&.title || "Book" %>
-          <% end %>
+          <%= link_to 'Back to Book', admin_book_path(@book), class: "text-gray-500 hover:text-gray-700", data: { turbo: false } %>
         </div>
 
         <div class="flex justify-between items-center mb-6">
           <div>
             <% if @prev_chapter_id %>
-              <%= link_to admin_book_chapter_path(@book, @prev_chapter_id), class: "btn-secondary", data: { turbo: false } do %>
+              <%= link_to admin_book_chapter_path(@book, @prev_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
                 ← Previous Chapter
               <% end %>
             <% end %>
@@ -22,7 +20,7 @@
 
           <div>
             <% if @next_chapter_id %>
-              <%= link_to admin_book_chapter_path(@book, @next_chapter_id), class: "btn-secondary", data: { turbo: false } do %>
+              <%= link_to admin_book_chapter_path(@book, @next_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
                 Next Chapter →
               <% end %>
             <% end %>
@@ -34,20 +32,9 @@
             <% available_languages = @chapter.book.selected_languages - @chapter.chapter_translations.pluck(:language) %>
             <% if available_languages.any? %>
               <div class="relative inline-block">
-                <select onchange="window.location.href=this.value"
-                        class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
-                  <option value="">Add Translation</option>
-                  <% available_languages.each do |lang| %>
-                    <option value="<%= new_admin_book_chapter_chapter_translation_path(@book, @chapter.id, language: lang) %>">
-                      Add <%= lang.upcase %>
-                    </option>
-                  <% end %>
-                </select>
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                  <svg class="h-4 w-4 fill-current" viewBox="0 0 20 20">
-                    <path d="M7 7l3-3 3 3m0 6l-3 3-3-3" stroke="currentColor" stroke-width="1.5" fill="none"/>
-                  </svg>
-                </div>
+                <%= link_to "New Translation", new_admin_book_chapter_chapter_translation_path(@book, @chapter.id),
+                  class: "btn btn-primary",
+                  data: { turbo_stream: true } %>
               </div>
             <% end %>
           </div>
@@ -59,14 +46,11 @@
         <% end %>
 
         <div class="flex space-x-2">
-          <%= link_to "Edit", edit_admin_book_chapter_path(@book, @chapter.id),
-              class: "btn-secondary",
-              data: { turbo_frame: "modal" } %>
-          <%= link_to "Back to Book", admin_book_path(@book), class: "btn-secondary", data: { turbo: false } %>
+          <%= link_to "Edit", edit_admin_book_chapter_path(@chapter.book, @chapter.id),
+              class: "btn btn-ghost text-sm",
+              data: { turbo_stream: true } %>
         </div>
       </div>
     </div>
-
-    <%= turbo_frame_tag "modal" %>
   </div>
 <% end %>

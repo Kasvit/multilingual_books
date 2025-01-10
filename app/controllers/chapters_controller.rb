@@ -17,7 +17,7 @@ class ChaptersController < ApplicationController
   end
 
   def set_chapter
-    @chapter = @book.chapters.find { |ch| ch.position == params[:position].to_i }
+    @chapter = @book.chapters.find_by(position: params[:position])
     raise ActiveRecord::RecordNotFound unless @chapter
   end
 end

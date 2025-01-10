@@ -33,10 +33,10 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
-gem 'sqlite3'
 gem 'solid_cable'
 gem 'solid_cache'
 gem 'solid_queue'
+gem 'sqlite3'
 # Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
 gem 'kamal', require: false
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
@@ -46,7 +46,7 @@ gem 'thruster', require: false
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem 'debug', platforms: %i[mri windows]
+  gem 'debug', platforms: %i[mri mingw x64_mingw]
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
@@ -67,8 +67,6 @@ group :development do
   # gem "web-console"
   gem 'annotaterb'
   gem 'debase'
-  gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem 'rails_live_reload'
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-lsp'
   gem 'rubocop-performance', require: false
@@ -98,3 +96,6 @@ gem 'charlock_holmes'
 gem 'htmlentities'
 gem 'nokogiri'
 gem 'open-uri'
+
+gem 'heroicon'
+gem 'view_component'

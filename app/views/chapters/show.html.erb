@@ -29,9 +29,9 @@
                data-language="<%= translation.language %>"
                class="translation-content hidden">
             <h2 class="text-xl font-semibold mb-4"><%= translation.title %></h2>
-            <div class="prose max-w-none">
-              <%= translation.content %>
-            </div>
+            <article class="prose max-w-none">
+              <%= translation.content.html_safe %>
+            </article>
           </div>
         <% end %>
       </div>

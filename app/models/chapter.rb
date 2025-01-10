@@ -20,7 +20,7 @@
 #  fk_rails_...  (book_id => books.id)
 #
 class Chapter < ApplicationRecord
-  default_scope { order(position: :desc) }
+  default_scope { order(position: :asc) }
 
   belongs_to :book
   has_many :chapter_translations, dependent: :destroy
@@ -28,11 +28,10 @@ class Chapter < ApplicationRecord
   after_create :generate_translations
 
   validates :position, presence: true
+  validates :position, uniqueness: { scope: :book_id }
+  validates :position, numericality: { greater_than: 0 }
 
   delegate :selected_languages, to: :book
-
-  # broadcasts_to ->(chapter) { "admin_chapters" },
-  #               inserts_by: :prepend
 
   def to_param
     position.to_s

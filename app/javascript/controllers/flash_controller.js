@@ -1,18 +1,24 @@
-import { Controller } from "@hotwired/stimulus"
+import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["message"]
+  static targets = ["container"];
 
   connect() {
-    setTimeout(() => {
-      this.dismiss()
-    }, 2000)
+    this.element.classList.add("animate-slide-in-right");
+    setTimeout(() => this.hide(), 2000);
   }
 
-  dismiss() {
-    this.element.classList.add("opacity-0")
-    setTimeout(() => {
-      this.element.remove()
-    }, 500)
+  hide() {
+    this.element.classList.remove("animate-slide-in-right");
+    this.element.classList.add("animate-slide-out-right");
+    this.element.addEventListener("animationend", () => this.remove(), { once: true });
+  }
+
+  close() {
+    this.hide();
+  }
+
+  remove() {
+    this.element.remove();
   }
 }

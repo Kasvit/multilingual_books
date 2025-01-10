@@ -1,15 +1,8 @@
 <% if @book.errors.empty? %>
+  <%= close_modal %>
   <%= turbo_stream.prepend "admin_books", @book %>
   <%= turbo_stream.prepend "books", @book %>
-  <%= turbo_stream.remove "modal" %>
+  <%= turbo_stream.prepend "flash", partial: "shared/flash" %>
 <% else %>
-  <%= turbo_stream.update "modal" do %>
-    <div class="modal">
-      <div class="modal-content">
-        <h2 class="text-2xl font-bold mb-4">New Book</h2>
-        <%= render "form", book: @book %>
-      </div>
-    </div>
-  <% end %>
+  <%= open_modal("New Book", render("admin/books/form", book: @book)) %>
 <% end %>
-<%= turbo_stream.append "flash", partial: "shared/flash", locals: { flash: flash } %>

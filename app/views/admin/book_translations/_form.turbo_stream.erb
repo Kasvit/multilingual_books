@@ -1,0 +1,41 @@
+<%= form_with(model: [:admin, book, translation],
+              url: translation.new_record? ? admin_book_book_translations_path(book) : admin_book_book_translation_path(book, translation.id),
+              class: "space-y-4 w-96") do |f| %>
+  <div>
+    <%- available_languages = book.selected_languages - book.book_translations.pluck(:language) %>
+    <%- if available_languages.any? %>
+      <%= f.label :language, class: "block text-sm font-medium text-gray-700" %>
+      <%= f.select :language,
+                  options_for_select(available_languages, translation.language),
+                {},
+                class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 #{'border-red-500' if translation.errors[:language].any?}" %>
+      <% if translation.errors[:language].any? %>
+        <p class="text-red-500 text-sm mt-1"><%= translation.errors[:language].join(', ') %></p>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :title, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_field :title,
+                     class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 #{'border-red-500' if translation.errors[:title].any?}" %>
+    <% if translation.errors[:title].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= translation.errors[:title].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :description, class: "block text-sm font-medium text-gray-700" %>
+    <%= f.text_area :description,
+                    rows: 4,
+                    class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 #{'border-red-500' if translation.errors[:description].any?}" %>
+    <% if translation.errors[:description].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= translation.errors[:description].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div class="flex justify-end space-x-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= button_tag "Cancel", type: "button", data: { action: "modal#close" }, class: "btn btn-ghost" %>
+  </div>
+<% end %>
