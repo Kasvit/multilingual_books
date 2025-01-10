@@ -2,30 +2,26 @@ import "@hotwired/turbo-rails"
 import TurboPower from 'turbo_power'
 import { StreamActions } from "@hotwired/turbo"
 import "./controllers"
+import { log } from "webpack/lib/node/nodeConsole"
 
 TurboPower.initialize(StreamActions)
 
 StreamActions.open_modal = function() {
   const modal_id = this.getAttribute("modal_id")
-  const modal = document.querySelector(modal_id)
+  const modal = document.querySelector('book-form-modal')
   modal.classList.remove("hidden")
   modal.showModal()
 }
 
-StreamActions.upsert_modal = function() {
-  const modal_id = this.getAttribute("modal_id")
-  const modal_html = this.getAttribute("html")
-  const modal = document.querySelector(modal_id)
-  console.log('upset modal from application.js', modal_id, modal)
-  if(modal) {
-    modal.remove()
-  }
-
-  document.body.insertAdjacentHTML("beforeend", modal_html);
-}
 
 StreamActions.close_modal = function() {
-  document.querySelectorAll("modal").forEach(modal => {
-    modal.close()
+  document.querySelectorAll("dialog.modal").forEach(modal => {
+    const controller = modal.controller
+    if (controller) {
+      controller.close()
+    } else {
+      modal.close()
+      modal.classList.add("hidden")
+    }
   })
 }
