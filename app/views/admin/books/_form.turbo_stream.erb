@@ -3,7 +3,7 @@
     <%= form.label :isbn, class: "mb-1 uppercase font-medium" %>
     <%= form.text_field :isbn, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:isbn].any?}" %>
     <% if book.errors[:isbn].any? %>
-      <p class="text-red-500 text-sm mt-1"><%= book.errors[:isbn].first %></p>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:isbn].join(', ') %></p>
     <% end %>
   </div>
 
@@ -13,7 +13,7 @@
         class: "form-select w-full rounded-md #{'border-red-500' if book.errors[:selected_languages].any?}",
         multiple: true %>
     <% if book.errors[:selected_languages].any? %>
-      <p class="text-red-500 text-sm mt-1"><%= book.errors[:selected_languages].first %></p>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:selected_languages].join(', ') %></p>
     <% end %>
   </div>
 

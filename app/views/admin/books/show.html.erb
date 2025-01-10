@@ -10,7 +10,7 @@
           <div class="flex space-x-2">
             <%= link_to "Edit", edit_admin_book_path(@book),
                 class: "btn btn-ghost",
-                data: { turbo_frame: "modal" } %>
+                data: { turbo_stream: true } %>
             <%= link_to "Back", admin_books_path, class: "btn btn-ghost", data: { turbo: false } %>
           </div>
         </div>
@@ -30,15 +30,9 @@
           <% available_languages = @book.selected_languages - @book.book_translations.pluck(:language) %>
           <% if available_languages.any? %>
             <div class="relative inline-block">
-              <select onchange="window.location.href=this.value"
-                      class="appearance-none bg-white border border-gray-300 rounded-md pl-3 pr-10 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer">
-                <option value="">Add Translation</option>
-                <% available_languages.each do |lang| %>
-                  <option value="<%= new_admin_book_book_translation_path(@book, language: lang) %>">
-                    Add <%= lang.upcase %>
-                  </option>
-                <% end %>
-              </select>
+              <%= link_to "New Translation", new_admin_book_book_translation_path(@book),
+                class: "btn btn-primary",
+                data: { turbo_stream: true } %>
             </div>
           <% end %>
         </div>
@@ -55,7 +49,7 @@
             <h2 class="text-xl font-semibold">Chapters</h2>
             <%= link_to "New Chapter", new_admin_book_chapter_path(@book),
                 class: "btn btn-primary",
-                data: { turbo_frame: "modal" } %>
+                data: { turbo_stream: true } %>
           </div>
 
           <%= turbo_frame_tag "admin_chapters" do %>

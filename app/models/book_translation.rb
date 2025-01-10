@@ -32,33 +32,4 @@ class BookTranslation < ApplicationRecord
   validates :language, presence: true
   validates :title, presence: true
   validates :language, uniqueness: { scope: :book_id }
-
-  # broadcasts_to ->(translation) { "admin_book_#{translation.book_id}_translations_#{translation.id}" },
-  #               inserts_by: :prepend
-  # after_create_commit -> {
-  #   broadcast_prepend_to(
-  #     "admin_book_#{book_id}_translations",
-  #     target: "book_translations",
-  #     partial: "admin/book_translations/book_translation",
-  #     locals: { book: book, translation: self }
-  #   )
-  # }
-  # after_update_commit -> {
-  #   broadcast_replace_to(
-  #     "admin_book_#{book_id}_translations",
-  #     target: "book_translation_#{id}",
-  #     partial: "admin/book_translations/book_translation"
-  #   )
-  # }
-  # after_destroy_commit -> {
-  #   broadcast_remove_to("admin_book_#{book_id}_translations", target: "book_translation_#{id}")
-  # }
-
-  # pg_search_scope :search_by_title,
-  #                 against: :title,
-  #                 using: {
-  #                   tsearch: {
-  #                     dictionary: "simple"
-  #                   }
-  #                 }
 end

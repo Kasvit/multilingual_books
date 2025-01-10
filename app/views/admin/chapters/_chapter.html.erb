@@ -18,7 +18,7 @@
             data: { turbo: false } %>
         <%= link_to "Edit", edit_admin_book_chapter_path(chapter.book, chapter.id),
             class: "btn btn-ghost text-sm",
-            data: { turbo_frame: "modal" } %>
+            data: { turbo_stream: true } %>
         <%= button_to "Delete", admin_book_chapter_path(chapter.book, chapter.id),
             method: :delete,
             class: "btn btn-error text-sm",

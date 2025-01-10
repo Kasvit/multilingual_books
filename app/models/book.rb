@@ -25,9 +25,6 @@ class Book < ApplicationRecord
 
   validates_presence_of :isbn
 
-  # broadcasts_to ->(_book) { 'books' }, inserts_by: :prepend
-  # broadcasts_to ->(_book) { 'admin_books' }, inserts_by: :prepend
-
   private
 
   def clean_selected_languages

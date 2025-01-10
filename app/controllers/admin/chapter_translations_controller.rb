@@ -8,6 +8,12 @@ module Admin
 
     def new
       @translation = @chapter.chapter_translations.build(language: params[:language])
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_book_chapter_path(@book, @chapter)
+        end
+      end
     end
 
     def create
@@ -26,7 +32,14 @@ module Admin
       end
     end
 
-    def edit; end
+    def edit
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_book_chapter_path(@book, @chapter)
+        end
+      end
+    end
 
     def update
       respond_to do |format|
