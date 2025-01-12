@@ -3,52 +3,51 @@
 App for translating books to multiple languages.
 
 ### TODO:
-- [ ] Add book model
-- [ ] Add book chapters model
-- [ ] Add websites parser
-- [ ] Add ai book translator
-- [ ] Add UI
+- [ ] Add book model with one selected language
+- [ ] Add book chapters model with one selected language
+- [ ] Add to book on UI available languages
+- [ ] Add chapter autoincrement position
+- [ ] Add users, authentication. Admin, translator, user
+- [ ] Add to user primary language, secondary languages
+- [ ] Add react
+- [ ] Add react chapters page
+- [ ] Add to chapter on UI available languages
 - [ ] Add dark/light mode
-- [ ] Add users
-- [ ] Add authentication
+- [ ] Add to book statuses: translated, ongoing, frozen, dropped
+- [ ] Add to book: hidden, hidden_reason (publisher can send a reason), ready_to_show (when the description is ready. allow to send to sitemap)
+- [ ] Add to chapter: statuses: hidden?, ready_to_show, translating
+- [ ] Add translators and paid chapters only when I find somebody to help manage it
+- [ ] Add translator's UI (new layout?)
+- [ ] Chapters can be paid. Chapters can become free after some time (set by admin/translator)
+- [ ] Add notifications: a new chapter from the following book, new comments
+- [ ] Add AI chapter translator (https://github.com/wikiti/deepl-rb)  (mark to translated with AI)
+
+
+
+#### Additional:
+- use https://github.com/galetahub/ckeditor or similar
 - [ ] Add UI user custom settings
-
-
-scraper = WebScraperService.new('https://tl.rulate.ru/book/7481/166707/ready_new')
-text = scraper.fetch_and_parse
-
-translation_service = Ai::TranslationService.new(text, :ru, :uk)
-result = translation_service.translate
-
-entities_retrieval_service = Ai::EntitiesRetrievalService.new(result[:memory_key])
-entities = entities_retrieval_service.retrieve
-
-puts result
-puts entities
-
-### How to:
-- check how to use https://github.com/wikiti/deepl-rb
-- check how to create books with multiple languages
-- same for chapters
-
+- [ ] Translator can send a request for a chapter translation (see below)
+- [ ] Add user statistics: what books he read, what chapters he read
+- [ ] Add chapters and book description detectors to review text for harmful content (AI?)
+- [ ] Add website parser
+- [ ] Add to book: author, publisher, tags, genre, main image, gallery images, rating, comments with commentable
+- [ ] Comments can be commented
+- [ ] Genres can be used for filtering books
+- [ ] Add to book: 'download book' button (generate epub or pdf and open in browser or send to email) (paid)
+- [ ] Add to book: 'buy book' button and buy all chapters??
+- [ ] Migrate to AWS
 
 
 ### Example of usage
-- Адмін створює нову книгу з назвою і описом певною мовою
+- Адмін або перекладач створює нову книгу з назвою і описом певною мовою 
 - Адмін може запустити ріквест, щоб перекласти назву і опис книги на вибрані мови
 - Адмін додає до книги розділи з певною мовою
 - Адмін може запустити ріквест, щоб перекласти розділ на вибрані мови
 - Користувачі можуть переглядати книги і розділи з певною мовою
 
-
-
-### Additional:
-- use https://github.com/galetahub/ckeditor or similar
-- у книги і розділів є поле, ready_to_publish, яке показує, що книга готова до публікації
-- у книги є автор опционально
-- у книги є видавець опционально
-- у книги є теги опционально
-- у книги є жанр опционально
-- у книги є картинка, група картинок  опционально
-- у книги є рейтинг
-- коментарі до книги і розділів
+#### Translators:
+- книжка має перекладачів. Перекладачі можуть надіслати ріквест щоб їх додати до кнгии
+- якщо перекладач доданий до книги, то він може додавати нові розділи до книги з привязкою до цого розділу
+- у книжки є тільки одна мова і у її розділів також
+- можуть бути інші записи в БД по цій книжці на іншій мові.
