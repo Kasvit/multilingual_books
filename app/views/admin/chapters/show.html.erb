@@ -1,56 +1,42 @@
-<%= turbo_stream_from "admin_chapter_#{@chapter.id}_translations" %>
-
-<%= turbo_frame_tag @chapter, :admin do %>
-  <div class="container mx-auto px-4 py-8">
-    <div class="bg-white rounded-lg shadow p-6">
-      <div class="mb-6">
-        <div class="flex justify-between items-center mb-4">  
-          <h1 class="text-2xl font-bold">Chapter <%= @chapter.position %></h1>
-          <%= link_to 'Back to Book', admin_book_path(@book), class: "text-gray-500 hover:text-gray-700", data: { turbo: false } %>
-        </div>
-
-        <div class="flex justify-between items-center mb-6">
-          <div>
-            <% if @prev_chapter_id %>
-              <%= link_to admin_book_chapter_path(@book, @prev_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
-                ← Previous Chapter
-              <% end %>
-            <% end %>
-          </div>
-
-          <div>
-            <% if @next_chapter_id %>
-              <%= link_to admin_book_chapter_path(@book, @next_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
-                Next Chapter →
-              <% end %>
-            <% end %>
-          </div>
-        </div>
-
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Translations</h2>
-            <% available_languages = @chapter.book.selected_languages - @chapter.chapter_translations.pluck(:language) %>
-            <% if available_languages.any? %>
-              <div class="relative inline-block">
-                <%= link_to "New Translation", new_admin_book_chapter_chapter_translation_path(@book, @chapter.id),
-                  class: "btn btn-primary",
-                  data: { turbo_stream: true } %>
-              </div>
-            <% end %>
-          </div>
-
-        <% @chapter.chapter_translations.each do |translation| %>
-          <%= turbo_frame_tag "admin_chapter_#{@chapter.id}_translations", class: "space-y-4" do %>
-            <%= render "admin/chapter_translations/chapter_translation", chapter: @chapter, translation: translation %>
-          <% end %>
-        <% end %>
+<div class="container mx-auto px-4 py-8">
+  <div class="bg-white rounded-lg shadow p-6">
+    <div class="mb-6">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold mb-4"><%= @chapter.position %> - <%= @chapter.title %></h1>
 
         <div class="flex space-x-2">
-          <%= link_to "Edit", edit_admin_book_chapter_path(@chapter.book, @chapter.id),
-              class: "btn btn-ghost text-sm",
+          <%= link_to "Edit", edit_admin_book_chapter_path(@book, @chapter.id),
+              class: "btn btn-ghost",
               data: { turbo_stream: true } %>
+          <%= link_to "Back to book", admin_book_path(@book), class: "btn btn-ghost", data: { turbo: false } %>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+        <div class="mt-6">
+          <article class="prose max-w-none">
+            <%= @chapter.content.html_safe %>
+          </article>
+        </div>
+      </div>
+
+      <div class="flex justify-between items-center mb-6">
+        <div>
+          <% if @prev_chapter_id %>
+            <%= link_to admin_book_chapter_path(@book, @prev_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
+              ← Previous Chapter
+            <% end %>
+          <% end %>
+        </div>
+
+        <div>
+          <% if @next_chapter_id %>
+            <%= link_to admin_book_chapter_path(@book, @next_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
+              Next Chapter →
+            <% end %>
+          <% end %>
         </div>
       </div>
     </div>
   </div>
-<% end %>
+</div>

@@ -6,7 +6,7 @@ module Admin
     before_action :set_chapter, only: %i[show edit update destroy]
 
     def index
-      @chapters = @book.chapters.includes(:chapter_translations)
+      @chapters = @book.chapters
     end
 
     def show
@@ -51,7 +51,7 @@ module Admin
 
     def update
       respond_to do |format|
-        if @chapter.update!(chapter_params)
+        if @chapter.update(chapter_params)
           format.html do
             redirect_to admin_book_chapter_url(@book, @chapter), notice: 'Chapter was successfully updated.'
           end
@@ -75,7 +75,7 @@ module Admin
     private
 
     def set_book
-      @book = Book.includes(:book_translations, chapters: :chapter_translations)
+      @book = Book.includes(:translations, :chapters)
                   .find(params[:book_id])
     end
 
@@ -84,7 +84,7 @@ module Admin
     end
 
     def chapter_params
-      params.require(:chapter).permit(:position)
+      params.require(:chapter).permit(:position, :title, :content)
     end
   end
 end

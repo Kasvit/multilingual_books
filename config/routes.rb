@@ -5,10 +5,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :books do
-      resources :book_translations
-      resources :chapters do
-        resources :chapter_translations
-      end
+      resources :chapters
     end
   end
 

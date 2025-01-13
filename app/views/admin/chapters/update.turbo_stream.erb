@@ -1,8 +1,7 @@
 <% if @chapter.errors.empty? %>
   <%= close_modal %>
-  <%= turbo_stream.replace 'admin_chapters', @chapter %>
+  <%= turbo_stream.prepend 'admin_chapters', @chapter %>
   <%= turbo_stream.prepend "flash", partial: "shared/flash" %>
 <% else %>
   <%= open_modal("Edit Chapter", render("admin/chapters/form", chapter: @chapter)) %>
 <% end %>
-

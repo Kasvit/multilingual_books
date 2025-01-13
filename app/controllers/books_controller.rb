@@ -2,11 +2,11 @@
 
 class BooksController < ApplicationController
   def index
-    @books = Book.includes(:book_translations).all
+    @books = Book.includes(:translations).all
   end
 
   def show
-    @book = Book.includes(:book_translations, chapters: [:chapter_translations])
+    @book = Book.includes(:translations, :chapters)
                 .references(:chapters)
                 .where(id: params[:id])
                 .order('chapters.position ASC')

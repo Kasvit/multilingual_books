@@ -1,7 +1,0 @@
-<% if @translation.errors.empty? %>
-  <%= close_modal %>
-  <%= turbo_stream.prepend "admin_chapter_#{@chapter.id}_translations", partial: 'admin/chapter_translations/chapter_translation', locals: { chapter: @chapter, translation: @translation } %>
-  <%= turbo_stream.prepend "flash", partial: "shared/flash" %>
-<% else %>
-  <%= open_modal("New Translation", render("admin/chapter_translations/form", book: @book, chapter: @chapter, translation: @translation)) %>
-<% end %>

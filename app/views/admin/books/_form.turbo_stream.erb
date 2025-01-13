@@ -1,19 +1,26 @@
 <%= form_with(model: [:admin, book], local: false, class: 'w-96') do |form| %>
-  <div class="flex flex-col mb-2">
-    <%= form.label :isbn, class: "mb-1 uppercase font-medium" %>
-    <%= form.text_field :isbn, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:isbn].any?}" %>
-    <% if book.errors[:isbn].any? %>
-      <p class="text-red-500 text-sm mt-1"><%= book.errors[:isbn].join(', ') %></p>
+  <div>
+    <%= form.label :title, class: "mb-1 uppercase font-medium" %>
+    <%= form.text_field :title, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:title].any?}" %>
+    <% if book.errors[:title].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:title].join(', ') %></p>
     <% end %>
   </div>
 
-  <div class="flex flex-col mb-2">
-    <%= form.label :selected_languages, class: "mb-1 text-sm font-medium" %>
-    <%= form.select :selected_languages, Book::AVAILABLE_LANGUAGES,
-        class: "form-select w-full rounded-md #{'border-red-500' if book.errors[:selected_languages].any?}",
-        multiple: true %>
-    <% if book.errors[:selected_languages].any? %>
-      <p class="text-red-500 text-sm mt-1"><%= book.errors[:selected_languages].join(', ') %></p>
+  <div>
+    <%= form.label :description, class: "mb-1 uppercase font-medium" %>
+    <%= form.text_area :description, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:description].any?}" %>
+    <% if book.errors[:description].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:description].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :language, class: "mb-1 text-sm font-medium" %>
+    <%= form.select :language, Book::AVAILABLE_LANGUAGES,
+        class: "form-select w-full rounded-md #{'border-red-500' if book.errors[:language].any?}" %>
+    <% if book.errors[:language].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:language].join(', ') %></p>
     <% end %>
   </div>
 

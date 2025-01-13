@@ -2,14 +2,7 @@
   <div class="bg-gray-50 rounded-lg p-4">
     <div class="flex justify-between items-center">
       <div>
-        <h3 class="font-semibold">Chapter <%= chapter.position %></h3>
-        <div class="mt-2 space-y-1">
-          <% chapter.chapter_translations.each do |translation| %>
-            <div class="text-sm text-gray-600">
-              <%= translation.language.upcase %>: <%= translation.title %>
-            </div>
-          <% end %>
-        </div>
+        <h3 class="font-semibold"><%= chapter.position %>. <%= chapter.title %></h3>
       </div>
 
       <div class="flex space-x-2">

@@ -4,11 +4,23 @@
 #
 # Table name: books
 #
-#  id                 :bigint           not null, primary key
-#  isbn               :string
-#  selected_languages :string           default([]), is an Array
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id               :bigint           not null, primary key
+#  description      :string
+#  hidden           :boolean          default(FALSE)
+#  hidden_reason    :string
+#  language         :string           not null
+#  published        :boolean          default(FALSE), not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  original_book_id :integer
+#
+# Indexes
+#
+#  index_books_on_original_book_id               (original_book_id)
+#  index_books_on_original_book_id_and_language  (original_book_id,language) UNIQUE
+#  index_books_on_published                      (published)
+#  index_books_on_title_and_language             (title,language) UNIQUE
 #
 require 'rails_helper'
 

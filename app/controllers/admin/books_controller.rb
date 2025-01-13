@@ -5,7 +5,7 @@ module Admin
     before_action :set_book, only: %i[show edit update destroy]
 
     def index
-      @books = Book.includes(:book_translations).all
+      @books = Book.originals.includes(:translations).all
     end
 
     def show; end
@@ -67,11 +67,11 @@ module Admin
     private
 
     def set_book
-      @book = Book.includes(:book_translations, chapters: [:chapter_translations]).find(params[:id])
+      @book = Book.includes(:translations, :chapters).find(params[:id])
     end
 
     def book_params
-      params.require(:book).permit(:isbn, selected_languages: [])
+      params.require(:book).permit(:title, :description, :language)
     end
   end
 end
