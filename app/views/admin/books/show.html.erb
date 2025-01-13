@@ -27,11 +27,11 @@
             <h3 class="text-lg font-semibold mb-2">Available in</h3>
             <% if @book.translations.exists? %>
               <% @book.translations.each do |translation| %>
-                <%= link_to "(#{translation.language.upcase}) #{translation.title}", book_path(translation), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
+                <%= link_to "(#{translation.language.upcase}) #{translation.title}", admin_book_path(translation), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
               <% end %>
             <% end %>
             <% if @book.original_book.present? %>
-              <%= link_to "(#{@book.original_book.language.upcase}) #{@book.original_book.title} (original)", book_path(@book.original_book), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
+              <%= link_to "(#{@book.original_book.language.upcase}) #{@book.original_book.title} (original)", admin_book_path(@book.original_book), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
             <% end %>
           </div>
         <% end %>

@@ -19,14 +19,14 @@
 
     <div class="flex justify-between items-center">
       <div>
-        <% if @has_prev_chapter %>
-          <%= link_to "Previous Chapter", book_chapter_path(@book, @chapter.position - 1) %>
+        <% if @prev_chapter %>
+          <%= link_to "Previous Chapter", book_chapter_path(@book, @prev_chapter.position) %>
         <% end %>
       </div>
 
       <div>
-        <% if @has_next_chapter %>
-          <%= link_to "Next Chapter", book_chapter_path(@book, @chapter.position + 1) %>
+        <% if @next_chapter %>
+          <%= link_to "Next Chapter", book_chapter_path(@book, @next_chapter.position) %>
         <% end %>
       </div>
     </div>

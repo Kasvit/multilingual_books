@@ -5,16 +5,14 @@ class ChaptersController < ApplicationController
   before_action :set_chapter
 
   def show
-    # TODO: find closest chapters instead of +- 1
-    @has_prev_chapter = @book.chapters.any? { |ch| ch.position == @chapter.position - 1 }
-    @has_next_chapter = @book.chapters.any? { |ch| ch.position == @chapter.position + 1 }
+    @prev_chapter = @book.chapters.where('position < ?', @chapter.position).first
+    @next_chapter = @book.chapters.where('position > ?', @chapter.position).order(position: :asc).last
   end
 
   private
 
   def set_book
-    @book = Book.includes(:translations, :chapters)
-                .find(params[:book_id])
+    @book = Book.find(params[:book_id])
   end
 
   def set_chapter

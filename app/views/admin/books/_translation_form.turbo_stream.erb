@@ -1,0 +1,31 @@
+<%= form_with(model: book, url: create_translation_admin_book_path(book), method: :post, local: false, class: 'w-96') do |form| %>
+  <div>
+    <%= form.label :title, class: "mb-1 uppercase font-medium" %>
+    <%= form.text_field :title, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:title].any?}" %>
+    <% if book.errors[:title].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:title].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :description, class: "mb-1 uppercase font-medium" %>
+    <%= form.text_area :description, class: "form-input w-full rounded-md #{'border-red-500' if book.errors[:description].any?}" %>
+    <% if book.errors[:description].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:description].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.label :language, class: "mb-1 text-sm font-medium" %>
+    <%= form.select :language, Book::AVAILABLE_LANGUAGES,
+        class: "form-select w-full rounded-md #{'border-red-500' if book.errors[:language].any?}" %>
+    <% if book.errors[:language].any? %>
+      <p class="text-red-500 text-sm mt-1"><%= book.errors[:language].join(', ') %></p>
+    <% end %>
+  </div>
+
+  <div class="mt-4 flex justify-end">
+    <%= form.submit "Save", class: "btn btn-primary" %>
+    <%= button_tag "Cancel", type: "button", data: { action: "modal#close" }, class: "btn btn-ghost" %>
+  </div>
+<% end %>

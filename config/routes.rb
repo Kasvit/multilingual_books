@@ -5,6 +5,10 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :books do
+      member do
+        get :new_translation
+        post :create_translation
+      end
       resources :chapters
     end
   end

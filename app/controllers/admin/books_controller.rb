@@ -2,7 +2,7 @@
 
 module Admin
   class BooksController < AdminController
-    before_action :set_book, only: %i[show edit update destroy]
+    before_action :set_book, only: %i[show edit update destroy new_translation create_translation]
 
     def index
       @books = Book.originals.includes(:translations).all
@@ -61,6 +61,29 @@ module Admin
       respond_to do |format|
         format.html { redirect_to admin_books_url, notice: 'Book was successfully destroyed.' }
         format.turbo_stream { flash.now[:notice] = 'Book was successfully destroyed.' }
+      end
+    end
+
+    def new_translation
+      @translation = @book.translations.build
+      respond_to do |format|
+        format.turbo_stream
+        format.html do
+          redirect_to admin_books_path
+        end
+      end
+    end
+
+    def create_translation
+      @translation = @book.translations.build(book_params)
+      respond_to do |format|
+        if @translation.save
+          format.html { redirect_to admin_book_url(@translation), notice: 'Translation was successfully created.' }
+          format.turbo_stream { flash.now[:notice] = 'Translation was successfully created.' }
+        else
+          format.html { render :new_translation, status: :unprocessable_entity }
+          format.turbo_stream { render :create_translation, status: :unprocessable_entity }
+        end
       end
     end
 
