@@ -55,6 +55,7 @@ module Admin
       @book.destroy
 
       respond_to do |format|
+        format.html { redirect_to admin_books_path, notice: 'Book was successfully destroyed.' }
         format.turbo_stream { flash.now[:notice] = 'Book was successfully destroyed.' }
       end
     end

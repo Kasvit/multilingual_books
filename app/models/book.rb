@@ -33,7 +33,9 @@ class Book < ApplicationRecord
 
   validates :title, presence: true, uniqueness: { scope: :language }
   validates :language, presence: true
-  validates :language, uniqueness: { scope: :original_book_id, message: 'only one translated language per original book' }, if: -> { original_book_id.present? }
+  validates :language, uniqueness: { scope: :original_book_id, message: 'only one translated language per original book' }, if: lambda {
+    original_book_id.present?
+  }
   validate :language_cannot_be_same_as_original_book, if: -> { original_book_id.present? }
 
   scope :originals, -> { where(original_book_id: nil) }
@@ -49,8 +51,8 @@ class Book < ApplicationRecord
   private
 
   def language_cannot_be_same_as_original_book
-    if original_book && language == original_book.language
-      errors.add(:language, "cannot be the same as the original book's language")
-    end
+    return unless original_book && language == original_book.language
+
+    errors.add(:language, "cannot be the same as the original book's language")
   end
 end

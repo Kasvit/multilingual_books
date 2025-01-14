@@ -2,7 +2,7 @@
 
 source 'https://rubygems.org'
 
-ruby '3.3.6'
+ruby '3.4.1'
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 8.0.1'
@@ -50,11 +50,9 @@ group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
   gem 'brakeman', require: false
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
-  gem 'database_cleaner-active_record'
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rubocop-rails-omakase', require: false
   gem 'shoulda-matchers'
@@ -82,6 +80,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'database_cleaner-active_record'
   gem 'database_cleaner-redis'
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'

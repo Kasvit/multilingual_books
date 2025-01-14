@@ -26,7 +26,7 @@ FactoryBot.define do
   factory :book do
     title { Faker::Book.title }
     description { Faker::Lorem.sentence(word_count: 10) }
-    language { %w[en uk ru ja ko zh].sample }
+    language { Book::AVAILABLE_LANGUAGES.sample }
     published { false }
     hidden { false }
     hidden_reason { nil }

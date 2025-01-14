@@ -31,7 +31,9 @@ RSpec.describe Book, type: :model do
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_uniqueness_of(:title).scoped_to(:language) }
   it { is_expected.to validate_presence_of(:language) }
-  xit { is_expected.to validate_uniqueness_of(:language).scoped_to(:original_book_id).with_message('only one translated language per original book') }
+  xit do
+    is_expected.to validate_uniqueness_of(:language).scoped_to(:original_book_id).with_message('only one translated language per original book')
+  end
 
   context 'when original_book_id is present' do
     let(:original_book) { create(:book, language: 'en', title: 'Unique Title') }
@@ -51,13 +53,15 @@ RSpec.describe Book, type: :model do
       create(:book, original_book: original_book, language: 'ko', title: 'Existing Translation Title')
       new_book = build(:book, original_book: original_book, language: 'ko', title: 'Another Unique Title')
       expect(new_book).not_to be_valid
-      expect(new_book.errors[:language]).to include("only one translated language per original book")
+      expect(new_book.errors[:language]).to include('only one translated language per original book')
     end
   end
 
   # Associations
   it { is_expected.to have_many(:chapters).dependent(:destroy) }
-  it { is_expected.to have_many(:translations).class_name('Book').with_foreign_key('original_book_id').dependent(:nullify) }
+  it {
+    is_expected.to have_many(:translations).class_name('Book').with_foreign_key('original_book_id').dependent(:nullify)
+  }
   it { is_expected.to belong_to(:original_book).class_name('Book').optional }
 
   # Scopes

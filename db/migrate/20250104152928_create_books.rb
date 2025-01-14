@@ -13,8 +13,8 @@ class CreateBooks < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :books, [:title, :language], unique: true
-    add_index :books, [:original_book_id, :language], unique: true
+    add_index :books, %i[title language], unique: true
+    add_index :books, %i[original_book_id language], unique: true
     add_index :books, :published
   end
 end
