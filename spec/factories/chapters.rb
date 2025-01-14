@@ -5,7 +5,10 @@
 # Table name: chapters
 #
 #  id         :bigint           not null, primary key
+#  content    :string
 #  position   :integer          not null
+#  published  :boolean          default(FALSE), not null
+#  title      :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  book_id    :bigint           not null
@@ -21,15 +24,14 @@
 #
 FactoryBot.define do
   factory :chapter do
+    title { Faker::Book.title }
+    content { Faker::Lorem.paragraph(sentence_count: 3) }
+    published { false }
     association :book
+    position { 1 }
 
-    # Використовуємо lambda для динамічного визначення position
-    position do
-      book.chapters.maximum(:position).to_i + 1
-    end
-
-    trait :with_translations do
-      # Не потрібно створювати переклади вручну, вони створюються через after_create
+    trait :published do
+      published { true }
     end
   end
 end

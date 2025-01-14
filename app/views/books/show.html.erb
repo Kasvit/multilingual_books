@@ -1,55 +1,35 @@
 <div class="container mx-auto px-4 py-8">
   <div class="max-w-4xl mx-auto">
     <div class="mb-8">
-      <%= link_to books_path, class: "text-blue-600 hover:text-blue-800 transition-colors flex items-center" do %>
-        ← Назад до списку книг
-      <% end %>
+      <%= link_to '← Назад до списку книг', books_path, class: "text-blue-600 hover:text-blue-800 transition-colors flex items-center" %>
     </div>
 
     <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <div  data-controller="tabs">
-        <div class="border-b border-gray-200 mb-6">
-          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-            <% @book.book_translations.each_with_index do |translation, index| %>
-              <button type="button"
-                      data-tabs-target="tab"
-                      data-action="click->tabs#showTranslation"
-                      data-language="<%= translation.language %>"
-                      class="tab-button">
-                <%= translation.language.upcase %>
-              </button>
-            <% end %>
-          </nav>
-        </div>
+      <h1 class="text-5xl font-bold mb-2 text-gray-800">
+        <%= @book.title %>
+        <span class="text-lg font-normal text-gray-600">(<%= @book.language.upcase %>)</span>
+      </h1>
+      <p class="text-gray-700 mb-4"><%= @book.description %></p>
 
-        <div>
-          <% @book.book_translations.each_with_index do |translation, index| %>
-            <div data-tabs-target="content"
-                data-language="<%= translation.language %>"
-                class="translation-content hidden">
-              <h1 class="text-3xl font-bold mb-2">
-                <%= translation.title %>
-                <span class="text-lg font-normal text-gray-600">(<%= translation.language.upcase %>)</span>
-              </h1>
-              <p class="text-gray-700"><%= translation.description %></p>
-            </div>
-          <% end %>
-        </div>
-      </div>
-
-      <div class="text-sm text-gray-500 mt-6">
-        <div>ISBN: <%= @book.isbn %></div>
-        <div>Доступні мови: <%= @book.selected_languages.map(&:upcase).join(", ") %></div>
-      </div>
-    </div>
     <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h2 class="text-xl font-bold mb-4">Зміст</h2>
+      <h2 class="text-2xl font-bold mb-4">Зміст</h2>
       <div class="space-y-2">
-        <% @book.chapters.each do |chapter| %>
-          <%= link_to "Розділ #{chapter.position}", book_chapter_path(@book, chapter.position),
-              class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
+        <%= render @book.chapters %>
+      </div>
+    </div>
+
+    <% if @book.translations.exists? || @book.original_book.present? %>
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold mb-2">Available in</h3>
+        <% if @book.translations.exists? %>
+          <% @book.translations.each do |translation| %>
+            <%= link_to "(#{translation.language.upcase}) #{translation.title}", book_path(translation), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
+          <% end %>
+        <% end %>
+        <% if @book.original_book.present? %>
+          <%= link_to "(#{@book.original_book.language.upcase}) #{@book.original_book.title}", book_path(@book.original_book), class: "block text-blue-600 hover:text-blue-800 transition-colors" %>
         <% end %>
       </div>
-    </div>
+    <% end %>
   </div>
 </div>

@@ -4,29 +4,48 @@
 #
 # Table name: books
 #
-#  id                 :bigint           not null, primary key
-#  isbn               :string
-#  selected_languages :string           default([]), is an Array
-#  created_at         :datetime         not null
-#  updated_at         :datetime         not null
+#  id               :bigint           not null, primary key
+#  description      :string
+#  hidden           :boolean          default(FALSE)
+#  hidden_reason    :string
+#  language         :string           not null
+#  published        :boolean          default(FALSE), not null
+#  title            :string           not null
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  original_book_id :integer
+#
+# Indexes
+#
+#  index_books_on_original_book_id               (original_book_id)
+#  index_books_on_original_book_id_and_language  (original_book_id,language) UNIQUE
+#  index_books_on_published                      (published)
+#  index_books_on_title_and_language             (title,language) UNIQUE
 #
 FactoryBot.define do
   factory :book do
-    isbn { Faker::Code.isbn }
-    selected_languages { %w[uk ru en] }
+    title { Faker::Book.title }
+    description { Faker::Lorem.sentence(word_count: 10) }
+    language { %w[en uk ru ja ko zh].sample }
+    published { false }
+    hidden { false }
+    hidden_reason { nil }
+    original_book_id { nil }
 
-    trait :with_translations do
-      # Не потрібно створювати переклади вручну, вони створюються через after_create
+    trait :published do
+      published { true }
     end
 
-    trait :with_chapters do
+    trait :with_translation do
       after(:create) do |book|
-        # Не створюємо chapters через create_list, бо вони вже створюються через after_create
+        create(:book, original_book: book, language: book.available_languages.sample, title: Faker::Book.title)
       end
     end
 
-    trait :full do
-      # Обидва колбеки спрацюють автоматично
+    trait :with_chapter do
+      after(:create) do |book|
+        create(:chapter, book: book, title: Faker::Book.title, content: Faker::Lorem.paragraph)
+      end
     end
   end
 end

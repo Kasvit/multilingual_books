@@ -5,10 +5,11 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :books do
-      resources :book_translations
-      resources :chapters do
-        resources :chapter_translations
+      member do
+        get :new_translation
+        post :create_translation
       end
+      resources :chapters, except: [:index]
     end
   end
 

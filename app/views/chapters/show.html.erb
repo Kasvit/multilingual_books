@@ -2,51 +2,31 @@
   <div class="max-w-4xl mx-auto">
     <div class="mb-8">
       <%= link_to book_path(@book), class: "text-blue-600 hover:text-blue-800 transition-colors flex items-center" do %>
-        ← Назад до <%= @book.book_translations.first&.title || "книги" %>
+        ← Назад до <%= @book.title %>
       <% end %>
     </div>
 
-    <div class="bg-white rounded-lg shadow-lg p-6 mb-6" data-controller="tabs">
-      <h1 class="text-2xl font-bold mb-4">Розділ <%= @chapter.position %></h1>
+    <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+      <h1 class="text-2xl font-bold mb-4"><%= @chapter.position %>. <%= @chapter.title %></h1>
 
-      <div class="border-b border-gray-200">
-        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
-          <% @chapter.chapter_translations.each_with_index do |translation, index| %>
-            <button type="button"
-                    data-tabs-target="tab"
-                    data-action="click->tabs#showTranslation"
-                    data-language="<%= translation.language %>"
-                    class="tab-button">
-              <%= translation.language.upcase %>
-            </button>
-          <% end %>
-        </nav>
-      </div>
 
       <div class="mt-6">
-        <% @chapter.chapter_translations.each_with_index do |translation, index| %>
-          <div data-tabs-target="content"
-               data-language="<%= translation.language %>"
-               class="translation-content hidden">
-            <h2 class="text-xl font-semibold mb-4"><%= translation.title %></h2>
-            <article class="prose max-w-none">
-              <%= translation.content.html_safe %>
-            </article>
-          </div>
-        <% end %>
+        <article class="prose max-w-none">
+          <%= @chapter.content.html_safe %>
+        </article>
       </div>
     </div>
 
     <div class="flex justify-between items-center">
       <div>
-        <% if @has_prev_chapter %>
-          <%= link_to "Previous Chapter", book_chapter_path(@book, @chapter.position - 1) %>
+        <% if @prev_chapter %>
+          <%= link_to "Previous Chapter", book_chapter_path(@book, @prev_chapter.position) %>
         <% end %>
       </div>
 
       <div>
-        <% if @has_next_chapter %>
-          <%= link_to "Next Chapter", book_chapter_path(@book, @chapter.position + 1) %>
+        <% if @next_chapter %>
+          <%= link_to "Next Chapter", book_chapter_path(@book, @next_chapter.position) %>
         <% end %>
       </div>
     </div>
