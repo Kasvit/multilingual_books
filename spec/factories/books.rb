@@ -24,16 +24,28 @@
 #
 FactoryBot.define do
   factory :book do
-    isbn { Faker::Code.isbn }
-    selected_languages { %w[uk ru en] }
+    title { Faker::Book.title }
+    description { Faker::Lorem.sentence(word_count: 10) }
+    language { %w[en uk ru ja ko zh].sample }
+    published { false }
+    hidden { false }
+    hidden_reason { nil }
+    original_book_id { nil }
 
-    trait :with_chapters do
+    trait :published do
+      published { true }
+    end
+
+    trait :with_translation do
       after(:create) do |book|
-        create_list(:chapter, 3, book: book)
+        create(:book, original_book: book, language: book.available_languages.sample, title: Faker::Book.title)
       end
     end
 
-    trait :full do
+    trait :with_chapter do
+      after(:create) do |book|
+        create(:chapter, book: book, title: Faker::Book.title, content: Faker::Lorem.paragraph)
+      end
     end
   end
 end

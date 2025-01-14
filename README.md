@@ -3,10 +3,11 @@
 App for translating books to multiple languages.
 
 ### TODO:
-- [ ] Add book model with one language
-- [ ] Add book chapters model with one language (delegated from the book)
-- [ ] Add to book on UI available languages
-- [ ] Add chapter autoincrement position
+- [x] Add book model with one language
+- [x] Add book chapters model with one language (delegated from the book)
+- [x] Add to book on UI available languages
+- [x] Add chapter autoincrement position
+- [ ] Add CI
 - [ ] Add users, authentication. Admin, translator, user
 - [ ] Add to user primary language, secondary languages
 - [ ] Add react

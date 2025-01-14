@@ -11,6 +11,7 @@
             <span class="text-lg font-normal text-gray-600">(<%= @book.language.upcase %>)</span>
           </h1>
           <div class="flex space-x-2">
+            <%= button_to "Delete", admin_book_path(@book), method: :delete, class: "btn btn-error", data: { turbo: false } %>
             <%= link_to "Edit", edit_admin_book_path(@book),
                 class: "btn btn-ghost",
                 data: { turbo_stream: true } %>

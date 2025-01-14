@@ -25,11 +25,9 @@ module Admin
 
       respond_to do |format|
         if @book.save
-          format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully created.' }
           format.turbo_stream { flash.now[:notice] = 'Book was successfully created.' }
         else
-          format.html { render :new, status: :unprocessable_entity }
-          format.turbo_stream { render :create, status: :unprocessable_entity }
+          format.turbo_stream { render :new, status: :unprocessable_entity }
         end
       end
     end
@@ -46,10 +44,8 @@ module Admin
     def update
       respond_to do |format|
         if @book.update(book_params)
-          format.html { redirect_to admin_book_url(@book), notice: 'Book was successfully updated.' }
           format.turbo_stream { flash.now[:notice] = 'Book was successfully updated.' }
         else
-          format.html { render :edit, status: :unprocessable_entity }
           format.turbo_stream { render :update, status: :unprocessable_entity }
         end
       end
@@ -59,7 +55,6 @@ module Admin
       @book.destroy
 
       respond_to do |format|
-        format.html { redirect_to admin_books_url, notice: 'Book was successfully destroyed.' }
         format.turbo_stream { flash.now[:notice] = 'Book was successfully destroyed.' }
       end
     end
@@ -78,11 +73,9 @@ module Admin
       @translation = @book.translations.build(book_params)
       respond_to do |format|
         if @translation.save
-          format.html { redirect_to admin_book_url(@translation), notice: 'Translation was successfully created.' }
           format.turbo_stream { flash.now[:notice] = 'Translation was successfully created.' }
         else
-          format.html { render :new_translation, status: :unprocessable_entity }
-          format.turbo_stream { render :create_translation, status: :unprocessable_entity }
+          format.turbo_stream { render :new_translation, status: :unprocessable_entity }
         end
       end
     end

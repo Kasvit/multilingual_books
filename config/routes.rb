@@ -9,7 +9,7 @@ Rails.application.routes.draw do
         get :new_translation
         post :create_translation
       end
-      resources :chapters
+      resources :chapters, except: [:index]
     end
   end
 

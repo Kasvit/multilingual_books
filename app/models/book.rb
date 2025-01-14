@@ -23,7 +23,7 @@
 #  index_books_on_title_and_language             (title,language) UNIQUE
 #
 class Book < ApplicationRecord
-  AVAILABLE_LANGUAGES = %w[uk ru en].freeze # Site.settings.languages
+  AVAILABLE_LANGUAGES = %w[uk ru en ja ko zh].freeze # Site.settings.languages
 
   default_scope { order(created_at: :desc) }
 
@@ -33,6 +33,24 @@ class Book < ApplicationRecord
 
   validates :title, presence: true, uniqueness: { scope: :language }
   validates :language, presence: true
+  validates :language, uniqueness: { scope: :original_book_id, message: 'only one translated language per original book' }, if: -> { original_book_id.present? }
+  validate :language_cannot_be_same_as_original_book, if: -> { original_book_id.present? }
 
   scope :originals, -> { where(original_book_id: nil) }
+
+  def available_languages
+    return original_book.available_languages if original_book.present?
+
+    excluded_languages = [language].compact
+    excluded_languages += translations.pluck(:language).to_a
+    AVAILABLE_LANGUAGES - excluded_languages
+  end
+
+  private
+
+  def language_cannot_be_same_as_original_book
+    if original_book && language == original_book.language
+      errors.add(:language, "cannot be the same as the original book's language")
+    end
+  end
 end

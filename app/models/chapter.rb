@@ -34,8 +34,6 @@ class Chapter < ApplicationRecord
 
   before_validation :set_position, on: :create
 
-  delegate :language, to: :book
-
   def to_param
     position.to_s
   end

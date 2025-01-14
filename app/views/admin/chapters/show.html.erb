@@ -22,16 +22,22 @@
 
       <div class="flex justify-between items-center mb-6">
         <div>
-          <% if @prev_chapter_id %>
-            <%= link_to admin_book_chapter_path(@book, @prev_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
+          <% if @prev_chapter %>
+            <%= link_to admin_book_chapter_path(@book, @prev_chapter.id), class: "btn btn-ghost", data: { turbo: false } do %>
               ← Previous Chapter
+            <% end %>
+            <% if @chapter.position - @prev_chapter.position > 1 %>
+              <p class="text-sm text-red-500 align-middle inline-block">Correct chapter missed</p>
             <% end %>
           <% end %>
         </div>
 
         <div>
-          <% if @next_chapter_id %>
-            <%= link_to admin_book_chapter_path(@book, @next_chapter_id), class: "btn btn-ghost", data: { turbo: false } do %>
+          <% if @next_chapter %>
+            <% if @next_chapter.position - @chapter.position > 1 %>
+              <p class="text-sm text-red-500 align-middle inline-block">Correct chapter missed</p>
+            <% end %>
+            <%= link_to admin_book_chapter_path(@book, @next_chapter.id), class: "btn btn-ghost", data: { turbo: false } do %>
               Next Chapter →
             <% end %>
           <% end %>
